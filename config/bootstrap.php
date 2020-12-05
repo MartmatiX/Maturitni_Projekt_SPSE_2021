@@ -1,11 +1,13 @@
 <?php
 require_once __DIR__ . '/../dbConn/dbConn.php';
 require_once __DIR__ . '/../users/User.php';
+require_once __DIR__ . '/../tasks/main_objective/MainObjective.php';
 
 mb_internal_encoding("UTF-8");
 session_start();
 
 $db = new dbConn("maturitni_projekt", "root", "");
 $user = new User;
+$main_objective = new MainObjective;
 
 ?>

@@ -1,11 +1,12 @@
-<?php  require_once '../header.php';?>
 
+
+<?php  require_once '../header.php';?>
 
   <main>
       <?php if (!isset($_SESSION['username'])): ?>
         <form class="" method="post">
           <input type="text" name="username" placeholder="Uživatelské jméno">
-          <input type="text" name="password" placeholder="Heslo">
+          <input type="password" name="password" placeholder="Heslo">
           <input type="submit" name="login" value="Přihlásit se">
         </form>
       <?php endif ?>
@@ -26,6 +27,7 @@
       $password = $existence->password;
       if (password_verify($_POST['password'], $existence->password)) {
         $_SESSION['username'] = $existence->username;
+        $_SESSION['id'] = $existence->id;
         header("Location: ../objective_organizer.php");
       }else {
         header("Location: login-user.php?wrongPassword");
@@ -35,7 +37,6 @@
     }
   }
 
- ?>
-
+?>
 
 <?php require_once '../footer.php'; ?>
