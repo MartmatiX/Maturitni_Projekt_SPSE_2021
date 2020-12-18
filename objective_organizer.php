@@ -13,7 +13,8 @@
         echo $mainObjective->name . " ";
       }
     ?>
+    <br><br>
+    <a href="tasks/main_objective/add-main_objective.php">Přidat</a>
   </main>
 <?php endif; ?>
-
 <?php require_once 'footer.php'; ?>
