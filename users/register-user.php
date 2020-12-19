@@ -3,8 +3,8 @@
   <main>
     <?php if (!isset($_SESSION['username'])): ?>
       <form class="" method="post">
-        <input type="text" name="name" placeholder="Jméno">
-        <input type="text" name="surname" placeholder="Příjmení">
+        <input type="text" name="name" placeholder="Jméno" pattern="^[a-zěščřžýáíéúA-ZĚŠČŘŽÝÁÍÉÚ]{1,25}$">
+        <input type="text" name="surname" placeholder="Příjmení" pattern="^[a-zěščřžýáíéúůA-ZĚŠČŘŽÝÁÍÉÚ]{1,25}$">
         <input type="text" name="username" placeholder="Uživatelké jméno">
         <input type="password" name="password" placeholder="Heslo">
         <input type="password" name="password_repeat" placeholder="Heslo znovu">
