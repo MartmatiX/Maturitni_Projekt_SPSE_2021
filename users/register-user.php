@@ -3,12 +3,12 @@
   <main>
     <?php if (!isset($_SESSION['username'])): ?>
       <form class="" method="post">
-        <input type="text" name="name" placeholder="Jméno" pattern="^[a-zěščřžýáíéúA-ZĚŠČŘŽÝÁÍÉÚ]{1,25}$">
-        <input type="text" name="surname" placeholder="Příjmení" pattern="^[a-zěščřžýáíéúůA-ZĚŠČŘŽÝÁÍÉÚ]{1,25}$">
-        <input type="text" name="username" placeholder="Uživatelké jméno">
-        <input type="password" name="password" placeholder="Heslo">
-        <input type="password" name="password_repeat" placeholder="Heslo znovu">
-        <input type="text" name="email" placeholder="E-mail">
+        <input type="text" name="name" placeholder="Jméno" pattern="^[A-ZĚŠČŘŽÝÁÍÉÚ]{1}[a-zěščřžýáíéú]{1,25}$" required>
+        <input type="text" name="surname" placeholder="Příjmení" pattern="^[A-ZĚŠČŘŽÝÁÍÉÚ]{1}[a-zěščřžýáíéúů]{1,25}$" required>
+        <input type="text" name="username" placeholder="Uživatelké jméno" required>
+        <input type="password" name="password" placeholder="Heslo" required>
+        <input type="password" name="password_repeat" placeholder="Heslo znovu" required>
+        <input type="text" name="email" placeholder="E-mail" pattern="^[a-zěščřžýáíéůúA-ZĚŠČŘŽÝÁÍÉÚ.-_1-9]{1,}[@][a-z]{1,}[.][a-z]{1,}$" required>
         <input type="submit" name="register" value="Registrovat se">
       </form>
     <?php endif; ?>
