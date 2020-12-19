@@ -20,7 +20,7 @@
       if (!empty($medium_objective)) {
         foreach($medium_objective as $medium_objective_data){
           echo $medium_objective_data->name." ".$medium_objective_data->finish_date." ";
-          echo "<a href='../medium_objective/edit-medium_objective.php?id='".$medium_objective_data->id.">Upravit</a>";
+          echo "<a href='../medium_objective/edit-medium_objective.php?id=$medium_objective_data->id'>Upravit</a>";
         }
       }
     ?>
