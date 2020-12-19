@@ -28,6 +28,7 @@
       if (password_verify($_POST['password'], $existence->password)) {
         $_SESSION['username'] = $existence->username;
         $_SESSION['id'] = $existence->id;
+        $_SESSION['permission'] = $existence->permision;
         header("Location: ../objective_organizer.php");
       }else {
         header("Location: login-user.php?wrongPassword");

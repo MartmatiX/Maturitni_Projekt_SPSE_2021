@@ -15,5 +15,8 @@
           <a href="/../webs/Maturitni_Projekt_New/objective_organizer.php">Objective Organizer</a>
           <a href="/../webs/Maturitni_Projekt_New/users/profile-user.php"><?php echo $_SESSION['username']; ?></a>
         <?php endif; ?>
+        <?php if (isset($_SESSION['permission']) && $_SESSION['permission'] == 0): ?>
+          <a href="#">Statistiky</a>
+        <?php endif; ?>
       </nav>
     </header>

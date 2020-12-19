@@ -12,6 +12,7 @@
       foreach($mainObjectives as $mainObjective){
         echo "<div class='objective'>$mainObjective->name";
         echo "<a href='tasks/main_objective/details-main_objective.php?id=$mainObjective->id'>Podrobnosti</a>";
+        echo "<a href='tasks/main_objective/edit-main_objective.php?id=$mainObjective->id'>Upravit</a>";
         echo "<input class='urgent' value='$mainObjective->urgent' style='display:none;'>";
         echo "<form method='post'><input type='submit' name='delete' value='Odstranit'><input name='main_id' value='$mainObjective->id' style='display:none'></form>";
         echo "</div>";
@@ -20,7 +21,7 @@
         if ($db->run("DELETE FROM main_objectives WHERE id = ?", [$_POST['main_id']])) {
           header("Location: objective_organizer.php");
         }else {
-          echo "noadf";
+          echo "Location: objective_organizer.php?error";
         }
       }
     ?>
