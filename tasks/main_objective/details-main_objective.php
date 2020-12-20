@@ -9,7 +9,7 @@
       $main_objective_id = $_GET['id'];
       $main_objective = $db->run("SELECT * FROM main_objectives WHERE id = ?", [$_GET['id']])->fetchAll(PDO::FETCH_CLASS, "MainObjective");
       $medium_objective = $db->run("SELECT * FROM medium_objectives WHERE main_objectives_id = ?", [$_GET['id']])->fetchAll(PDO::FETCH_CLASS, "MediumObjective");
-      $additional_objective = $db->run("SELECT additional_objectives.name, additional_objectives.id AS 'medium_id', medium_objectives.id FROM additional_objectives JOIN medium_objectives ON additional_objectives.medium_objectives_id = medium_objectives.id WHERE medium_objectives.main_objectives_id = ?", [$_GET['id']])->fetchAll(PDO::FETCH_CLASS, "AdditionalObjective");
+      $additional_objective = $db->run("SELECT additional_objectives.name, additional_objectives.finished, additional_objectives.id AS 'medium_id', medium_objectives.id FROM additional_objectives JOIN medium_objectives ON additional_objectives.medium_objectives_id = medium_objectives.id WHERE medium_objectives.main_objectives_id = ?", [$_GET['id']])->fetchAll(PDO::FETCH_CLASS, "AdditionalObjective");
       foreach ($main_objective as $main_objective_data) {
         echo $main_objective_data->name;
       }
@@ -20,14 +20,21 @@
     <?php
       if (!empty($medium_objective)) {
         foreach($medium_objective as $medium_objective_data){
-          echo $medium_objective_data->name." ".$medium_objective_data->finish_date." ".$medium_objective_data->id;
+          echo $medium_objective_data->name." ".$medium_objective_data->finish_date." ".$medium_objective_data->id." ".$medium_objective_data->finished;
           echo "<form method='post'>
           <input type='submit' name='delete_medium' value='Smazat'>
+          <input type='submit' name='finish_medium' value='Splnit'>
           <input value='$medium_objective_data->id' style='display:none' name='medium_id'>
           </form>";
           echo "<a href='../medium_objective/edit-medium_objective.php?id=$medium_objective_data->id'>Upravit</a>";
           echo "<a href='../additional_objective/add-additional_objective.php?id=$medium_objective_data->id'>Přidat</a>";
           echo "<br><br>";
+        }
+        if (isset($_POST['finish_medium'])) {
+          if ($db->run("UPDATE medium_objectives SET finished = 1 WHERE id = ?", [$_POST['medium_id']])) {
+            $db->run("UPDATE additional_objectives SET finished = 1 WHERE medium_objectives_id = ?", [$_POST['medium_id']]);
+            header("Location: details-main_objective.php?id=".$_GET['id']);
+          }
         }
         if (isset($_POST['delete_medium'])) {
           if ($db->run("DELETE FROM medium_objectives WHERE id = ?", [$_POST['medium_id']])) {
@@ -36,12 +43,18 @@
         }
         foreach($additional_objective as $additional_objective_data){
           echo "<br><br>";
-          echo $additional_objective_data->name." ".$additional_objective_data->medium_objectives_id." ".$additional_objective_data->id;
+          echo $additional_objective_data->name." ".$additional_objective_data->medium_objectives_id." ".$additional_objective_data->id." ".$additional_objective_data->finished;
           echo "<form method='post'>
             <input type='submit' value='Smazat' name='delete'>
+            <input type='submit' value='Splnit' name='finish'>
             <input value='$additional_objective_data->medium_id' style='display:none' name='id'>
           </form>";
           echo "<a href='../additional_objective/edit-additional_objective.php?id=$additional_objective_data->medium_id'>Upravit</a>";
+        }
+      }
+      if (isset($_POST['finish'])) {
+        if ($db->run("UPDATE additional_objectives SET finished = 1 WHERE id = ?", [$_POST['id']])) {
+          header("Location: details-main_objective.php?id=".$_GET['id']);
         }
       }
       if (isset($_POST['delete'])) {
