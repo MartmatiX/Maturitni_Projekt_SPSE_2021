@@ -21,8 +21,18 @@
       if (!empty($medium_objective)) {
         foreach($medium_objective as $medium_objective_data){
           echo $medium_objective_data->name." ".$medium_objective_data->finish_date." ".$medium_objective_data->id;
+          echo "<form method='post'>
+          <input type='submit' name='delete_medium' value='Smazat'>
+          <input value='$medium_objective_data->id' style='display:none' name='medium_id'>
+          </form>";
           echo "<a href='../medium_objective/edit-medium_objective.php?id=$medium_objective_data->id'>Upravit</a>";
           echo "<a href='../additional_objective/add-additional_objective.php?id=$medium_objective_data->id'>Přidat</a>";
+          echo "<br><br>";
+        }
+        if (isset($_POST['delete_medium'])) {
+          if ($db->run("DELETE FROM medium_objectives WHERE id = ?", [$_POST['medium_id']])) {
+            header("Location: details-main_objective.php?id=".$_GET['id']);
+          }
         }
         foreach($additional_objective as $additional_objective_data){
           echo "<br><br>";
@@ -31,7 +41,7 @@
             <input type='submit' value='Smazat' name='delete'>
             <input value='$additional_objective_data->medium_id' style='display:none' name='id'>
           </form>";
-          echo "<a href='../additional_objective/edit-additional_objective.php'>Upravit</a>";
+          echo "<a href='../additional_objective/edit-additional_objective.php?id=$additional_objective_data->medium_id'>Upravit</a>";
         }
       }
       if (isset($_POST['delete'])) {

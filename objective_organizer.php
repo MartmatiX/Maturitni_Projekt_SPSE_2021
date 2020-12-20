@@ -1,11 +1,8 @@
 <?php require_once 'header.php'; ?>
 
 <?php if (!isset($_SESSION['username'])): ?>
-<main>
-  <h1>Nejste přihlášeni!</h1>
-</main>
-<?php endif; ?>
-<?php if (isset($_SESSION['username'])): ?>
+  <?php require_once 'error_components/not_logged-in.php'; ?>
+<?php else: ?>
   <main>
     <br><br>
     <?php
@@ -49,4 +46,5 @@
   }
   </script>
 <?php endif; ?>
+
 <?php require_once 'footer.php'; ?>
