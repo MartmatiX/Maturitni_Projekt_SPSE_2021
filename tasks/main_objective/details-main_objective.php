@@ -21,14 +21,24 @@
       if (!empty($medium_objective)) {
         foreach($medium_objective as $medium_objective_data){
           echo $medium_objective_data->name." ".$medium_objective_data->finish_date." ".$medium_objective_data->id." ".$medium_objective_data->finished;
-          echo "<form method='post'>
-          <input type='submit' name='delete_medium' value='Smazat'>
-          <input type='submit' name='finish_medium' value='Splnit'>
-          <input value='$medium_objective_data->id' style='display:none' name='medium_id'>
+          echo "<div>
+          <form method='post'>
+            <input type='submit' name='delete_medium' value='Smazat'>
+            <input type='submit' name='finish_medium' value='Splnit'>
+            <input value='$medium_objective_data->id' style='display:none' name='medium_id'>
           </form>";
           echo "<a href='../medium_objective/edit-medium_objective.php?id=$medium_objective_data->id'>Upravit</a>";
           echo "<a href='../additional_objective/add-additional_objective.php?id=$medium_objective_data->id'>Přidat</a>";
-          echo "<br><br>";
+          $counter_all = $db->run("SELECT count(id) AS 'celkem' FROM additional_objectives WHERE medium_objectives_id = ?", [$medium_objective_data->id])->fetch(PDO::FETCH_OBJ);
+          if ($counter_all->celkem == 0) {
+            echo "Zatím nebyly přidány doplňující úkoly";
+          }else {
+            $counter_finished = $db->run("SELECT count(id) AS 'splneno' FROM additional_objectives WHERE finished = 1 AND medium_objectives_id = ?", [$medium_objective_data->id])->fetch(PDO::FETCH_OBJ);
+            $percentage = intval(($counter_finished->splneno / $counter_all->celkem) * 100)."%";
+            echo $percentage;
+          }
+          echo "</div>";
+          echo "<br>";
         }
         if (isset($_POST['finish_medium'])) {
           if ($db->run("UPDATE medium_objectives SET finished = 1 WHERE id = ?", [$_POST['medium_id']])) {
