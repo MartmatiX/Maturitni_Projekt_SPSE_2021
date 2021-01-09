@@ -25,7 +25,7 @@
             </div>
           </div>
           <div class="login_picture">
-            <img src="/../webs/Maturitni_Projekt_New/css/pictures/login_picture.svg" alt="login_picture" width="700px;">
+            <img src="../css/pictures/login_picture.svg" alt="login_picture" width="700px;">
           </div>
         </div>
       <?php endif ?>

@@ -46,7 +46,7 @@
           </div>
         </div>
         <div class="register_picture">
-          <img src="/../webs/Maturitni_Projekt_New/css/pictures/register_picture.svg" alt="register_picture" width="500px">
+          <img src="../css/pictures/register_picture.svg" alt="register_picture" width="500px">
         </div>
       </div>
 
