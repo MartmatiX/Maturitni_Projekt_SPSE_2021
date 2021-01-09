@@ -4,11 +4,26 @@
   <?php require_once 'error_components/not_logged-in.php'; ?>
 <?php else: ?>
   <main>
+
+    <div class="organizer_wrapper">
+      <div class="main_wrapper">
+        <div class="organizer_header">
+          <h1>Trvající úkoly</h1>
+          <a href="#">Splněné úkoly</a>
+          <a href="#">Nesplněné úkoly</a>
+        </div>
+        <div class="organizer_add">
+          <button><a href="tasks/main_objective/add-main_objective.php">Přidat</a></button>
+        </div>
+      </div>
+
+
     <br><br>
     <?php
       $mainObjectives = $db->run("SELECT * FROM main_objectives WHERE users_id = ? AND finished = 0 ORDER BY urgent desc, finish_date asc", [$_SESSION['id']])->fetchAll(PDO::FETCH_CLASS, "MainObjective");
+
       foreach($mainObjectives as $mainObjective){
-        echo "<div class='objective'>$mainObjective->name";
+        echo $mainObjective->name;
         echo "<a href='tasks/main_objective/details-main_objective.php?id=$mainObjective->id'>Podrobnosti</a>";
         echo "<a href='tasks/main_objective/edit-main_objective.php?id=$mainObjective->id'>Upravit</a>";
         echo "<input class='urgent' value='$mainObjective->urgent' style='display:none;'>";
@@ -26,8 +41,18 @@
           $percentage = intval(($counter_finished->splneno / $counter->celkem) * 100)."%";
           echo "Spněno: ".$percentage;
         }
-        echo "</div>";
       }
+      ?>
+
+      <?php foreach ($mainObjectives as $mainObjective): ?>
+        <div class="card_wrapper">
+          <h4><?php echo $mainObjective->name ?></h4>
+        </div>
+      <?php endforeach; ?>
+
+</div>
+
+      <?php
       if (isset($_POST['finish'])) {
         if ($db->run("UPDATE main_objectives SET finished = 1 WHERE id = ?", [$_POST['main_id']])) {
           $db->run("DELETE FROM medium_objectives WHERE main_objectives_id = ?", [$_POST['main_id']]);
@@ -45,7 +70,6 @@
       }
     ?>
     <br><br>
-    <a href="tasks/main_objective/add-main_objective.php">Přidat</a>
   </main>
 
   <script type="text/javascript">

@@ -8,6 +8,8 @@
 
 <?php
 
+  
+
   if (isset($_POST['logOut'])) {
     session_unset();
     header("Location: ../index.php");
