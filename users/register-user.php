@@ -46,7 +46,7 @@
           </div>
         </div>
         <div class="register_picture">
-          <img src="../css/pictures/register_picture.svg" alt="register_picture" width="500px">
+          <img class="image_responsive" src="../css/pictures/register_picture.svg" alt="register_picture" width="500px">
         </div>
       </div>
 

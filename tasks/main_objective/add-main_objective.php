@@ -30,7 +30,7 @@
         </div>
       </div>
       <div class="div_add_picture">
-        <img src="../../css/pictures/add_picture.svg" alt="add_picture" width="500px">
+        <img class="image_responsive" src="../../css/pictures/add_picture.svg" alt="add_picture" width="500px">
       </div>
     </div>
     <?php

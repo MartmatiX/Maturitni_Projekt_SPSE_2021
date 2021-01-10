@@ -70,6 +70,12 @@ footer{
 
 /* class css*/
 
+.image_responsive{
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+}
+
 /* header css */
 .header_wrapper{
 
@@ -106,19 +112,19 @@ footer{
 }
 
 .form_header{
-  padding: 30px 0px 0px 60px;
+  padding: 3vw 0px 0px 4vw;
 }
 
 .div_form{
-  padding-top: 70px;
-  padding-left: 150px;
+  padding-top: 5vw;
+  padding-left: 8vw;
 }
 
 .login_submit p{
   font-size: 18px;
   font-weight: bold;
   color: rgb(9, 64, 103);
-  padding-top: 20px;
+  padding-top: 1vw;
 }
 
 .login_submit a{
@@ -126,21 +132,21 @@ footer{
 }
 
 .login_picture{
-  padding-right: 150px;
-  padding-top: 100px;
+  padding-right: 8vw;
+  padding-top: 5vw;
 }
 
 .register_picture{
-  padding-right: 150px;
-  padding-top: 100px
+  padding-right: 8vw;
+  padding-top: 10vw;
 }
 
 .form_spacing{
-  padding-bottom: 60px;
+  padding-bottom: 4vw;
 }
 
 .form_spacing h3{
-  padding-bottom: 10px;
+  padding-bottom: 0.5vw;
 }
 
 .div_input{
@@ -374,9 +380,12 @@ footer{
 
 .change_data{
   display: flex;
-  justify-content: space-between;
-  padding-top: 30px;
+  padding-top: 40px;
   padding-bottom: 80px;
+}
+
+.change_user_password, .change_user_data{
+  padding-left: 40px;
 }
 
 .change_data a{
@@ -403,8 +412,20 @@ footer{
 }
 
 .change_button{
-  padding-left: 40%;
+  padding-left: 300px;
   padding-bottom: 50px;
+}
+
+.change_button p{
+  color: rgb(9, 64, 103);
+  padding-top: 10px;
+  margin-left: -5vw;
+}
+
+/* change password */
+.form_spacing p{
+  padding-top: 5px;
+  color: rgb(9, 64, 103);
 }
 
 /* footer css */

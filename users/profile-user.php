@@ -34,7 +34,6 @@
       </div>
     </div>
   <?php endif; ?>
-    
 
   <?php
     if (isset($_POST['logOut'])) {
@@ -43,7 +42,5 @@
     }
    ?>
 </main>
-
-
 
 <?php require_once '../footer.php'; ?>

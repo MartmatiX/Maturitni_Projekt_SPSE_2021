@@ -33,7 +33,7 @@
       </div>
     </div>
     <div class="div_edit_picture">
-      <img src="../../css/pictures/edit_picture.svg" alt="picture_edit" width="500px">
+      <img class="image_responsive" src="../../css/pictures/edit_picture.svg" alt="picture_edit" width="500px">
     </div>
   </div>
 

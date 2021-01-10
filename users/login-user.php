@@ -25,7 +25,7 @@
             </div>
           </div>
           <div class="login_picture">
-            <img src="../css/pictures/login_picture.svg" alt="login_picture" width="700px;">
+            <img class="image_responsive" src="../css/pictures/login_picture.svg" alt="login_picture" width="700px;">
           </div>
         </div>
       <?php endif ?>
