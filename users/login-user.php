@@ -43,8 +43,12 @@
     if (!empty($existence)) {
       $password = $existence->password;
       if (password_verify($_POST['password'], $existence->password)) {
+        $_SESSION['name'] = $existence->name;
+        $_SESSION['surname'] = $existence->surname;
         $_SESSION['username'] = $existence->username;
         $_SESSION['id'] = $existence->id;
+        $_SESSION['password'] = $existence->password;
+        $_SESSION['email'] = $existence->email;
         $_SESSION['permission'] = $existence->permision;
         header("Location: ../objective_organizer.php");
       }else {

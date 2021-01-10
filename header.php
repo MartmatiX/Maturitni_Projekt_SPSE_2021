@@ -30,7 +30,7 @@
               <div class="header_links">
                 <a href="/../webs/Maturitni_Projekt_New/objective_organizer.php">Úkoly</a>
                 <a href="/../webs/Maturitni_Projekt_New/teams/teams.php">Týmy</a>
-                <a href="/../webs/Maturitni_Projekt_New/users/profile-user.php"><?php echo $_SESSION['username']; ?></a>
+                <a href="/../webs/Maturitni_Projekt_New/users/profile-user.php"><?php echo $_SESSION['name']." ".$_SESSION['surname']; ?></a>
                 <?php if (isset($_SESSION['permission']) && $_SESSION['permission'] == 0): ?>
                     <a href="/../webs/Maturitni_Projekt_New/statistics/statistics.php">Statistiky</a>
                 <?php endif; ?>

@@ -17,8 +17,11 @@
           <?php else: ?>
             <h1>Trvající úkoly</h1>
           <?php endif; ?>
-          <a href="tasks/main_objective/finished-main_objective.php">Splněné úkoly</a>
-          <a href="#">Nesplněné úkoly</a>
+          <div class="organizer_header_links">
+            <a href="tasks/main_objective/finished-main_objective.php" class="link_spacing_right">Splněné úkoly</a>
+            <p>|</p>
+            <a href="#" class="link_spacing_left">Nesplněné úkoly</a>
+          </div>
         </div>
         <div class="organizer_add">
           <a href="tasks/main_objective/add-main_objective.php"><button>Přidat</button></a>

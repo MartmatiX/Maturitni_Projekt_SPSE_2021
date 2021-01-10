@@ -233,7 +233,7 @@ footer{
   flex-direction: row;
   justify-content: space-between;
   padding-bottom: 40px;
-  color: white;
+  color: rgb(185, 212, 232);
   font-size: 20px;
 }
 
@@ -294,6 +294,29 @@ footer{
   padding-bottom: 60px;
 }
 
+.organizer_header_links{
+  padding: 10px 0px 0px 25px;
+  display: flex;
+}
+
+.organizer_header_links p{
+  color: rgb(144, 180, 206);
+}
+
+.link_spacing_left{
+  padding-left: 15px;
+}
+
+.link_spacing_right{
+  padding-right: 15px;
+}
+
+.organizer_header_links a{
+  text-decoration: none;
+  color: rgb(144, 180, 206);
+  font-size: 18px;
+}
+
 .form_spacing_urgent h3{
   padding-left: 30px;
 }
@@ -329,6 +352,59 @@ footer{
 
 .finished_wrapper{
   padding-left: 55px;
+}
+
+/* profile css */
+.profile_wrapper{
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile_data{
+  padding: 70px 0px 0px 150px;
+}
+
+.profile_data h2{
+  padding-bottom: 5px;
+}
+
+.profile_data h3{
+  padding-bottom: 30px;
+}
+
+.change_data{
+  display: flex;
+  justify-content: space-between;
+  padding-top: 30px;
+  padding-bottom: 80px;
+}
+
+.change_data a{
+  text-decoration: none;
+  color: white;
+  background-color: rgb(24, 111, 178);
+  border: 1px solid rgb(24, 111, 178);
+  border-radius: 3px;
+  padding: 10px;
+}
+
+.logOut_form{
+  padding-bottom: 40px;
+  padding-left: 50%;
+}
+
+.form_data{
+  display: flex;
+  justify-content: space-between;
+}
+
+.form_email_username{
+  padding-left: 30px;
+}
+
+.change_button{
+  padding-left: 40%;
+  padding-bottom: 50px;
 }
 
 /* footer css */

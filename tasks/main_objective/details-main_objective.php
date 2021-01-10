@@ -4,6 +4,10 @@
   <?php if (empty($users_id) || $_SESSION['id'] != $users_id['users_id']): ?>
     <?php require_once '../../error_components/wrong_users.php'; ?>
   <?php else: ?>
+    <div class="div_backLink">
+      <a href="../../objective_organizer.php"><button>Zpět</button></a>
+    </div>
+    <a href="../medium_objective/add-medium_objective.php?id=<?php echo"$main_objective_id"; ?>">Přidat</a>
     <?php
       $main_objective_id = $_GET['id'];
       $main_objective = $db->run("SELECT * FROM main_objectives WHERE id = ?", [$_GET['id']])->fetchAll(PDO::FETCH_CLASS, "MainObjective");
@@ -14,7 +18,6 @@
       }
       ?>
       <br><br>
-    <a href="../medium_objective/add-medium_objective.php?id=<?php echo"$main_objective_id"; ?>">Přidat</a>
     <br><br>
     <?php
       if (!empty($medium_objective)) {
@@ -74,5 +77,6 @@
         }
       }
     ?>
+    <?php require_once '../../footer.php'; ?>
   <?php endif; ?>
 </main>

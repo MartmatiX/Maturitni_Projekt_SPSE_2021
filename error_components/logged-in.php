@@ -1,4 +1,4 @@
 <div class="">
   <h2>You are already logged in!</h2>
-  <a href="../index.php">Zpět</a>
+  <a href="../objective_organizer.php">Zpět</a>
 </div>
