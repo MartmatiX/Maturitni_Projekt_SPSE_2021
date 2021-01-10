@@ -13,7 +13,7 @@
       <div class="main_wrapper">
         <div class="organizer_header">
           <?php if (empty($mainObjectives)): ?>
-            <h1>Zatím nemáte žádné úkoly</h1>
+            <h1>Žádné běžící úkoly</h1>
           <?php else: ?>
             <h1>Trvající úkoly</h1>
           <?php endif; ?>

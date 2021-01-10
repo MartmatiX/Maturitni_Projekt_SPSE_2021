@@ -35,8 +35,8 @@
     </div>
     <?php
       if (isset($_POST['submit'])) {
-        $name = $_POST['name'];
-        $finish_date = $_POST['finish_date'];
+        $name = htmlspecialchars($name = $_POST['name']);
+        $finish_date = htmlspecialchars($finish_date = $_POST['finish_date']);
         if (isset($_POST['urgent'])) {
           $urgent = 1;
         }else {

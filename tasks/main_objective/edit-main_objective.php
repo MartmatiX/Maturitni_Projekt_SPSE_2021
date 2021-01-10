@@ -39,13 +39,12 @@
 
   <?php
     if (isset($_POST['submit'])) {
-      $name = $_POST['name'];
-      $date = $_POST['finish_date'];
+      $name = htmlspecialchars($name = $_POST['name']);
+      $date = htmlspecialchars($date = $_POST['finish_date']);
       $urgent = 0;
       if (isset($_POST['urgent'])) {
         $urgent = 1;
       }
-      var_dump($urgent);
       if ($db->run("UPDATE main_objectives SET name = ?, finish_date = ?, urgent = ? WHERE id = ?", [$name, $date, $urgent, $_GET['id']])) {
         header("Location: ../../objective_organizer.php");
       }else {

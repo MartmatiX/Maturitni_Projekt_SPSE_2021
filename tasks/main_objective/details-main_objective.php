@@ -1,7 +1,6 @@
 <?php require_once "../../header.php"; ?>
 <main>
-  <?php $users_id = $db->run("SELECT users_id FROM main_objectives WHERE id = ?", [$_GET['id']])->fetch();
-  ?>
+  <?php $users_id = $db->run("SELECT users_id FROM main_objectives WHERE id = ?", [$_GET['id']])->fetch();?>
   <?php if (empty($users_id) || $_SESSION['id'] != $users_id['users_id']): ?>
     <?php require_once '../../error_components/wrong_users.php'; ?>
   <?php else: ?>

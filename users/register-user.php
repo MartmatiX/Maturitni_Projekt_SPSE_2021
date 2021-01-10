@@ -59,13 +59,13 @@
 
 <?php
   if (isset($_POST['register'])) {
-    $username = $_POST['username'];
+    $username = htmlspecialchars($username = $_POST['username']);
     $existence = $db->run("SELECT username FROM users WHERE username = ?", [$username])->fetch();
     if (empty($existence)) {
-      $name = $_POST['name'];
-      $surname = $_POST['surname'];
-      $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-      $email = $_POST['email'];
+      $name = htmlspecialchars($name = $_POST['name']);
+      $surname = htmlspecialchars($surname = $_POST['surname']);
+      $password = htmlspecialchars($password = password_hash($_POST['password'], PASSWORD_DEFAULT));
+      $email = htmlspecialchars($email = $_POST['email']);
       if ($db->run("INSERT INTO users(name, surname, username, password, email) VALUES (?,?,?,?,?)", [$name, $surname, $username, $password, $email])) {
         header("Location: login-user.php");
       }else {

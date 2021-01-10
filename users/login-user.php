@@ -38,10 +38,8 @@
 <?php
 
   if (isset($_POST['login'])) {
-    $username = $_POST['username'];
+    $username = htmlspecialchars($username = $_POST['username']);
     $existence = $db->run("SELECT * FROM users WHERE username = ?", [$username])->fetch(PDO::FETCH_OBJ);
-    var_dump($existence);
-    echo $existence->password;
     if (!empty($existence)) {
       $password = $existence->password;
       if (password_verify($_POST['password'], $existence->password)) {
