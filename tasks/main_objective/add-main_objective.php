@@ -1,13 +1,18 @@
 <?php require_once '../../header.php'; ?>
 <main>
   <?php if (isset($_SESSION['username'])): ?>
-    <form class="" method="post">
-      <input type="text" name="name" placeholder="Jméno úkolu">
-      <input type="date" name="finish_date" placeholder="Datum">
-      <input type="checkbox" name="urgent" id="urgent">
-      <label for="urgent">Urgentní</label>
-      <input type="submit" name="submit" value="Přidat">
-    </form>
+    <div class="div_backLink">
+      <a href="../../objective_organizer.php"><button>Zpět</button></a>
+    </div>
+    <div class="">
+      <form class="" method="post">
+        <input type="text" name="name" placeholder="Jméno úkolu">
+        <input type="date" name="finish_date" placeholder="Datum">
+        <input type="checkbox" name="urgent" id="urgent">
+        <label for="urgent">Urgentní</label>
+        <input type="submit" name="submit" value="Přidat">
+      </form>
+    </div>
     <?php
       if (isset($_POST['submit'])) {
         $name = $_POST['name'];
@@ -28,4 +33,5 @@
   <?php else:?>
     <?php require_once "../../error_components/not_logged-in.php"; ?>
   <?php endif; ?>
+  <?php require_once '../../footer.php'; ?>
 </main>
