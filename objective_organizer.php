@@ -9,24 +9,6 @@
       $mainObjectives = $db->run("SELECT * FROM main_objectives WHERE users_id = ? AND finished = 0 ORDER BY urgent desc, finish_date asc", [$_SESSION['id']])->fetchAll(PDO::FETCH_CLASS, "MainObjective");
     ?>
 
-    <?php
-    if (isset($_POST['finish'])) {
-      if ($db->run("UPDATE main_objectives SET finished = 1 WHERE id = ?", [$_POST['main_id']])) {
-        $db->run("DELETE FROM medium_objectives WHERE main_objectives_id = ?", [$_POST['main_id']]);
-        header("Location: tasks/main_objective/finished-main_objective.php");
-      }else {
-        echo "error";
-      }
-    }
-    if (isset($_POST['delete'])) {
-      if ($db->run("DELETE FROM main_objectives WHERE id = ?", [$_POST['main_id']])) {
-        header("Location: objective_organizer.php");
-      }else {
-        echo "Location: objective_organizer.php?error";
-      }
-    }
-  ?>
-
     <div class="organizer_wrapper">
       <div class="main_wrapper">
         <div class="organizer_header">
@@ -82,8 +64,9 @@
             <form method="post" id="card_form">
               <div class="card_form">
                 <div class="card_finish">
-                  <button type="submit" form="card_form" name="finish"><img src="css/pictures/icon_finish.png" alt="icon_finish" height="60px" width="60px"></button>
-                  <input name='main_id' value="<?php echo $mainObjective->id ?>" style='display:none'>
+                  <input class="form_finished" type="submit" name="finish" value="">
+                  <input name='main_id' type="text" value="<?php echo $mainObjective->id ?>" style='display:none'>
+                  <input class="urgent" value="<?php echo $mainObjective->urgent ?>" style='display:none'>
                 </div>
                 <div class="card_details">
                   <a href="tasks/main_objective/details-main_objective.php?id=<?php echo $mainObjective->id ?>"><img src="css/pictures/icon_details.png" alt="icon_details" height="40px" width="40px"></a>
@@ -92,11 +75,28 @@
                   <a href="tasks/main_objective/edit-main_objective.php?id=<?php echo $mainObjective->id ?>"><img src="css/pictures/icon_edit.png" alt="icon_edit" height="40px" width="40px"></a>
                 </div>
                 <div class="card_delete">
-                  <button type="submit" form="card_form" name="delete"><img src="css/pictures/icon_delete.png" alt="icon_finish" height="60px" width="60px"></button>
+                  <input class="form_delete" type="submit" name="delete" value="">
                 </div>
               </div>
             </form>
         </div>
+        <?php
+        if (isset($_POST['finish'])) {
+          if ($db->run("UPDATE main_objectives SET finished = 1 WHERE id = ?", [$_POST['main_id']])) {
+            $db->run("DELETE FROM medium_objectives WHERE main_objectives_id = ?", [$_POST['main_id']]);
+            header("Location: tasks/main_objective/finished-main_objective.php");
+          }else {
+            echo "error";
+          }
+        }
+        if (isset($_POST['delete'])) {
+          if ($db->run("DELETE FROM main_objectives WHERE id = ?", [$_POST['main_id']])) {
+            header("Location: objective_organizer.php");
+          }else {
+            echo "Location: objective_organizer.php?error";
+          }
+        }
+      ?>
       <?php endforeach; ?>
     </div>
   </div>
@@ -106,7 +106,7 @@
   let array = document.getElementsByClassName('urgent');
   for (let i = 0; i < array.length; i++) {
     if (array[i].value == 1) {
-      document.getElementsByClassName('objective')[i].style.border = "1px solid orange";
+      document.getElementsByClassName('card_wrapper')[i].style.border = " 3px solid orange";
     }
   }
   </script>

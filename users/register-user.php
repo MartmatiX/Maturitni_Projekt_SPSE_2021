@@ -40,7 +40,7 @@
                 </div>
               </div>
               <div class="register_submit">
-                <input type="submit" name="register" value="Registrovat se">
+                <input class="form_send" type="submit" name="register" value="Registrovat se">
               </div>
             </form>
           </div>

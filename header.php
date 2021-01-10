@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="/../webs/Maturitni_Projekt_New/css/master.css">
-    <title></title>
+    <title>Objective Organizer</title>
   </head>
   <body>
     <header>

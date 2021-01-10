@@ -18,7 +18,7 @@
                   <input type="password" name="password" placeholder="**********">
                 </div>
                 <div class="login_submit">
-                  <input type="submit" name="login" value="Přihlásit se">
+                  <input class="form_send" type="submit" name="login" value="Přihlásit se">
                   <p>Pokud nemáte účet, můžete se zaregistrovat <a href="/../webs/Maturitni_Projekt_New/users/register-user.php">ZDE</a></p>
                 </div>
               </form>
