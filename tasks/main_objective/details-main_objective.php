@@ -1,4 +1,4 @@
-<?php require_once "../../header.php"; ?>
+<?php require_once '../../header.php'; ?>
 <main>
   <?php $users_id = $db->run("SELECT users_id FROM main_objectives WHERE id = ?", [$_GET['id']])->fetch();?>
   <?php if (empty($users_id) || $_SESSION['id'] != $users_id['users_id']): ?>
@@ -7,76 +7,109 @@
     <div class="div_backLink">
       <a href="../../objective_organizer.php"><button>Zpět</button></a>
     </div>
-    <a href="../medium_objective/add-medium_objective.php?id=<?php echo"$main_objective_id"; ?>">Přidat</a>
+
     <?php
       $main_objective_id = $_GET['id'];
-      $main_objective = $db->run("SELECT * FROM main_objectives WHERE id = ?", [$_GET['id']])->fetchAll(PDO::FETCH_CLASS, "MainObjective");
+      $main_objective = $db->run("SELECT * FROM main_objectives WHERE id = ?", [$main_objective_id])->fetch(PDO::FETCH_OBJ);
       $medium_objective = $db->run("SELECT * FROM medium_objectives WHERE main_objectives_id = ?", [$_GET['id']])->fetchAll(PDO::FETCH_CLASS, "MediumObjective");
-      $additional_objective = $db->run("SELECT additional_objectives.name, additional_objectives.finished, additional_objectives.id AS 'medium_id', medium_objectives.id FROM additional_objectives JOIN medium_objectives ON additional_objectives.medium_objectives_id = medium_objectives.id WHERE medium_objectives.main_objectives_id = ?", [$_GET['id']])->fetchAll(PDO::FETCH_CLASS, "AdditionalObjective");
-      foreach ($main_objective as $main_objective_data) {
-        echo $main_objective_data->name;
-      }
-      ?>
-      <br><br>
-    <br><br>
-    <?php
-      if (!empty($medium_objective)) {
-        foreach($medium_objective as $medium_objective_data){
-          echo $medium_objective_data->name." ".$medium_objective_data->finish_date." ".$medium_objective_data->id." ".$medium_objective_data->finished;
-          echo "<div>
-          <form method='post'>
-            <input type='submit' name='delete_medium' value='Smazat'>
-            <input type='submit' name='finish_medium' value='Splnit'>
-            <input value='$medium_objective_data->id' style='display:none' name='medium_id'>
-          </form>";
-          echo "<a href='../medium_objective/edit-medium_objective.php?id=$medium_objective_data->id'>Upravit</a>";
-          echo "<a href='../additional_objective/add-additional_objective.php?id=$medium_objective_data->id'>Přidat</a>";
-          $counter_all = $db->run("SELECT count(id) AS 'celkem' FROM additional_objectives WHERE medium_objectives_id = ?", [$medium_objective_data->id])->fetch(PDO::FETCH_OBJ);
-          if ($counter_all->celkem == 0) {
-            echo "Zatím nebyly přidány doplňující úkoly";
-          }else {
-            $counter_finished = $db->run("SELECT count(id) AS 'splneno' FROM additional_objectives WHERE finished = 1 AND medium_objectives_id = ?", [$medium_objective_data->id])->fetch(PDO::FETCH_OBJ);
-            $percentage = intval(($counter_finished->splneno / $counter_all->celkem) * 100)."%";
-            echo $percentage;
-          }
-          echo "</div>";
-          echo "<br>";
-        }
-        if (isset($_POST['finish_medium'])) {
-          if ($db->run("UPDATE medium_objectives SET finished = 1 WHERE id = ?", [$_POST['medium_id']])) {
-            $db->run("UPDATE additional_objectives SET finished = 1 WHERE medium_objectives_id = ?", [$_POST['medium_id']]);
-            header("Location: details-main_objective.php?id=".$_GET['id']);
-          }
-        }
-        if (isset($_POST['delete_medium'])) {
-          if ($db->run("DELETE FROM medium_objectives WHERE id = ?", [$_POST['medium_id']])) {
-            header("Location: details-main_objective.php?id=".$_GET['id']);
-          }
-        }
-        foreach($additional_objective as $additional_objective_data){
-          echo "<br><br>";
-          echo $additional_objective_data->name." ".$additional_objective_data->medium_objectives_id." ".$additional_objective_data->id." ".$additional_objective_data->finished;
-          echo "<form method='post'>
-            <input type='submit' value='Smazat' name='delete'>
-            <input type='submit' value='Splnit' name='finish'>
-            <input value='$additional_objective_data->medium_id' style='display:none' name='id'>
-          </form>";
-          echo "<a href='../additional_objective/edit-additional_objective.php?id=$additional_objective_data->medium_id'>Upravit</a>";
-        }
-      }
-      if (isset($_POST['finish'])) {
-        if ($db->run("UPDATE additional_objectives SET finished = 1 WHERE id = ?", [$_POST['id']])) {
-          header("Location: details-main_objective.php?id=".$_GET['id']);
-        }
-      }
-      if (isset($_POST['delete'])) {
-        if ($db->run("DELETE FROM additional_objectives WHERE id = ?", [$_POST['id']])) {
-          header("Location: details-main_objective.php?id=".$_GET['id']);
-        }else{
-          header("Location: details-main_objective.php?id=".$_GET['id']);
-        }
-      }
     ?>
-    <?php require_once '../../footer.php'; ?>
-  <?php endif; ?>
+
+    <div class="organizer_wrapper">
+      <div class="main_wrapper">
+        <div class="organizer_header">
+          <h1><?php echo $main_objective->name; ?></h1>
+        </div>
+        <div class="organizer_add">
+          <a href="../medium_objective/add-medium_objective.php?id=<?php echo"$main_objective_id"; ?>"><button>Přidat</button></a>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="organizer_wrapper">
+
+      <div class="flex_wrap">
+      <?php foreach ($medium_objective as $medium_objective_data): ?>
+        <?php
+            $counter = $db->run("SELECT count(id) AS 'celkem' FROM additional_objectives WHERE medium_objectives_id = ?", [$medium_objective_data->id])->fetch(PDO::FETCH_OBJ);
+            $counter_finished = $db->run("SELECT count(id) AS 'splneno' FROM additional_objectives WHERE medium_objectives_id = ? AND finished = 1", [$medium_objective_data->id])->fetch(PDO::FETCH_OBJ);
+            if ($counter->celkem == 0) {
+              $text = "Žádné podúkoly";
+              $percentage = 0;
+            }elseif ($counter->celkem == 1) {
+              $percentage = intval(($counter_finished->splneno/$counter->celkem) * 100);
+              $text = $counter->celkem." podúkol";
+            }elseif($counter->celkem > 1 && $counter->celkem < 5){
+              $percentage = intval(($counter_finished->splneno/$counter->celkem) * 100);
+              $text = $counter->celkem." podúkoly";
+            }else {
+              $percentage = intval(($counter_finished->splneno/$counter->celkem) * 100);
+              $text = $counter->celkem . " podúkolů";
+            }
+            $czechArray = explode("-", $medium_objective_data->finish_date);
+            $czechDate = $czechArray[2] . "." . $czechArray[1] . "." . $czechArray[0];
+          ?>
+          <div class="details_card_wrapper">
+            <div class="details_card_medium">
+              <div class="details_card_header">
+                <h4><?php echo $medium_objective_data->name; ?></h4>
+                <a href="../medium_objective/edit-medium_objective.php?id=<?php echo $medium_objective_data->id;?>"><img src="../../css/pictures/icon_edit.png" alt="edit_icon" height="40px" width="40px"></a>
+              </div>
+              <div class="card_progressBar">
+                <progress value="<?php echo $percentage?>" max="100"></progress>
+              </div>
+              <div class="card_counter_date">
+                <div class="card_counter">
+                  <h5><?php echo $text;?></h5>
+                </div>
+                <div class="card_date">
+                  <h5><?php echo $czechDate; ?></h5>
+                </div>
+              </div>
+              <form method="post" id="card_form">
+                <div class="card_form">
+                  <div class="card_finish">
+                    <input class="form_finished" type="submit" name="finish" value="">
+                    <input name='main_id' type="text" value="<?php echo $mainObjective->id ?>" style='display:none'>
+                    <input class="urgent" value="<?php echo $mainObjective->urgent ?>" style='display:none'>
+                  </div>
+                  <div class="card_delete">
+                    <input class="form_delete" type="submit" name="delete" value="">
+                  </div>
+                  <div class="">
+                    <a href="../additional_objective/add-additional_objective.php?id=<?php echo $medium_objective_data->id; ?>"><img src="../../css/pictures/icon_add.png" alt="icon_add" height="40px" width="40px"></a>
+                  </div>
+                </div>
+              </form>
+            </div>
+          <?php
+            $additional_objective = $db->run("SELECT * FROM additional_objectives WHERE medium_objectives_id = ?", [$medium_objective_data->id])->fetchAll(PDO::FETCH_CLASS, "AdditionalObjective");
+          ?>
+        <?php foreach ($additional_objective as $additional_objective_data): ?>
+            <div class="details_card_additional">
+              <div class="additional_wrapper">
+                <div class="details_card_header">
+                  <h5><?php echo $additional_objective_data->name; ?></h5>
+                  <a href="../additional_objective/edit-additional_objective.php?id=<?php echo $additional_objective_data->id ?>"><img src="../../css/pictures/icon_edit.png" alt="icon_add" height="40px" width="40px"></a>
+                </div>
+                <div class="additional_finish_date">
+                  <h5><?php echo $additional_objective_data->finish_date; ?></h5>
+                </div>
+                <div class="additional_comment_wrapper">
+                  <div class="additional_comment_div">
+                    <p><?php echo $additional_objective_data->comment ?></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+        <?php endforeach; ?>
+        </div>
+     <?php endforeach; ?>
+      </div>
+    </div>
+
+
+  <?php endif;?>
 </main>
+<?php require_once '../../footer.php'; ?>

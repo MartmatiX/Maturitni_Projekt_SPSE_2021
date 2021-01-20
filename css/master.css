@@ -376,8 +376,38 @@ footer{
   padding-left: 10%;
 }
 
+.details_card_header h5{
+  color: white;
+  font-size: 30px;
+  padding-left: 10%;
+}
+
 .details_card_header a{
   padding-right: 10%;
+}
+
+.details_card_additional{
+  padding-top: 20px;
+  width: 98%;
+  margin-top: 10px;
+}
+
+.additional_wrapper{
+  margin-left: 2%;
+  background-color: rgb(24, 111, 178);
+  border-radius: 5px;
+}
+
+.additional_finish_date{
+  margin-right: 10%;
+  padding: 15px;
+  margin-left: 20px;
+}
+
+.additional_finish_date h5{
+  color: white;
+  font-size: 22px;
+  padding-left: 6%;
 }
 
 /* edit main css */

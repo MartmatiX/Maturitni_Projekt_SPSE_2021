@@ -72,7 +72,7 @@
                   <input class="urgent" value="<?php echo $mainObjective->urgent ?>" style='display:none'>
                 </div>
                 <div class="card_details">
-                  <a href="tasks/main_objective/details-main_objective2.php?id=<?php echo $mainObjective->id ?>"><img src="css/pictures/icon_details.png" alt="icon_details" height="40px" width="40px"></a>
+                  <a href="tasks/main_objective/details-main_objective.php?id=<?php echo $mainObjective->id ?>"><img src="css/pictures/icon_details.png" alt="icon_details" height="40px" width="40px"></a>
                 </div>
                 <div class="card_edit">
                   <a href="tasks/main_objective/edit-main_objective.php?id=<?php echo $mainObjective->id ?>"><img src="css/pictures/icon_edit.png" alt="icon_edit" height="40px" width="40px"></a>
