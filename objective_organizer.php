@@ -96,7 +96,7 @@
           if ($db->run("DELETE FROM main_objectives WHERE id = ?", [$_POST['main_id']])) {
             header("Location: objective_organizer.php");
           }else {
-            echo "Location: objective_organizer.php?error";
+            header("Location: objective_organizer.php?error");
           }
         }
       ?>

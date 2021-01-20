@@ -14,6 +14,35 @@
       $medium_objective = $db->run("SELECT * FROM medium_objectives WHERE main_objectives_id = ?", [$_GET['id']])->fetchAll(PDO::FETCH_CLASS, "MediumObjective");
     ?>
 
+    <?php
+      if (isset($_POST['finish_medium'])) {
+        if ($db->run("UPDATE medium_objectives SET finished = 1 WHERE id = ?", [$_POST['medium_id']])) {
+          $db->run("UPDATE additional_objectives SET finished = 1 WHERE medium_objectives_id = ?", [$_POST['medium_id']]);
+          header("Location: details-main_objective.php?id=".$main_objective_id);
+        }else {
+
+        }
+      }
+
+      if (isset($_POST['delete_medium'])) {
+        if ($db->run("DELETE FROM medium_objectives WHERE id = ?", [$_POST['medium_id']])) {
+          header("Location: details-main_objective.php?id=".$main_objective_id);
+        }
+      }
+
+      if (isset($_POST['finish_additional'])) {
+        if ($db->run("UPDATE additional_objectives SET finished = 1 WHERE id = ?", [$_POST['additional_id']])) {
+          header("Location: details-main_objective.php?id=".$main_objective_id);
+        }
+      }
+
+      if (isset($_POST['delete_additional'])) {
+        if ($db->run("DELETE FROM additional_objectives WHERE id = ?", [$_POST['additional_id']])) {
+          header("Location: details-main_objective.php?id=".$main_objective_id);
+        }
+      }
+     ?>
+
     <div class="organizer_wrapper">
       <div class="main_wrapper">
         <div class="organizer_header">
@@ -70,12 +99,11 @@
               <form method="post" id="card_form">
                 <div class="card_form">
                   <div class="card_finish">
-                    <input class="form_finished" type="submit" name="finish" value="">
-                    <input name='main_id' type="text" value="<?php echo $mainObjective->id ?>" style='display:none'>
-                    <input class="urgent" value="<?php echo $mainObjective->urgent ?>" style='display:none'>
+                    <input class="form_finished" type="submit" name="finish_medium" value="">
+                    <input name='medium_id' type="text" value="<?php echo $medium_objective_data->id ?>" style='display:none'>
                   </div>
                   <div class="card_delete">
-                    <input class="form_delete" type="submit" name="delete" value="">
+                    <input class="form_delete" type="submit" name="delete_medium" value="">
                   </div>
                   <div class="">
                     <a href="../additional_objective/add-additional_objective.php?id=<?php echo $medium_objective_data->id; ?>"><img src="../../css/pictures/icon_add.png" alt="icon_add" height="40px" width="40px"></a>
@@ -101,6 +129,17 @@
                     <p><?php echo $additional_objective_data->comment ?></p>
                   </div>
                 </div>
+                <form method="post" id="card_form">
+                  <div class="card_form">
+                    <div class="card_finish">
+                      <input class="form_finished" type="submit" name="finish_additional" value="">
+                      <input name='additional_id' type="text" value="<?php echo $additional_objective_data->id ?>" style='display:none'>
+                    </div>
+                    <div class="card_delete">
+                      <input class="form_delete" type="submit" name="delete_additional" value="">
+                    </div>
+                  </div>
+                </form>
               </div>
             </div>
         <?php endforeach; ?>
@@ -108,8 +147,6 @@
      <?php endforeach; ?>
       </div>
     </div>
-
-
   <?php endif;?>
 </main>
 <?php require_once '../../footer.php'; ?>

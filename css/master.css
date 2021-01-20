@@ -358,6 +358,7 @@ footer{
   margin-bottom: 20px;
   border: 1px solid rgb(33, 150, 242);
   border-radius: 6px;
+  padding-bottom: 10px;
 }
 
 .details_card_medium{
