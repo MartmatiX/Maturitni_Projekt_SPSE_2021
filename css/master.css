@@ -348,6 +348,38 @@ footer{
   padding-top: 70px;
 }
 
+/* details-main_objective css*/
+.details_card_wrapper{
+  margin-right: 40px;
+  background-color: rgb(33, 150, 242);
+  width: 46%;
+  min-width: 350px;
+  min-height: 300px;
+  margin-bottom: 20px;
+  border: 1px solid rgb(33, 150, 242);
+  border-radius: 6px;
+}
+
+.details_card_medium{
+  border-bottom: 5px solid rgb(24, 111, 178);
+}
+
+.details_card_header{
+  display: flex;
+  justify-content: space-between;
+  padding-top: 15px;
+}
+
+.details_card_header h4{
+  color: white;
+  font-size: 36px;
+  padding-left: 10%;
+}
+
+.details_card_header a{
+  padding-right: 10%;
+}
+
 /* edit main css */
 .div_edit_picture{
   padding-right: 250px;
