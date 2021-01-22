@@ -374,17 +374,17 @@ footer{
 .details_card_header h4{
   color: white;
   font-size: 36px;
-  padding-left: 10%;
+  padding-left: 5%;
 }
 
 .details_card_header h5{
   color: white;
   font-size: 30px;
-  padding-left: 10%;
+  padding-left: 15px;
 }
 
 .details_card_header a{
-  padding-right: 10%;
+  padding-right: 2%;
 }
 
 .details_card_additional{
@@ -397,18 +397,55 @@ footer{
   margin-left: 2%;
   background-color: rgb(24, 111, 178);
   border-radius: 5px;
+  padding-bottom: 20px;
 }
 
 .additional_finish_date{
-  margin-right: 10%;
-  padding: 15px;
-  margin-left: 20px;
+  margin-left: 15px;
+  padding: 5px 0px 20px 0px;
 }
 
 .additional_finish_date h5{
   color: white;
   font-size: 22px;
-  padding-left: 6%;
+}
+
+.details_card_form{
+  display: flex;
+  flex-direction: row;
+  padding: 10px 20px 10px 10px;
+  justify-content: space-between;
+}
+
+.card_finish_delete{
+  display: flex;
+  flex-direction: row;
+}
+
+.additional_comment_div{
+  background-color: white;
+  width: 95%;
+  margin-left: 15px;
+  min-height: 100px;
+  text-align: justify;
+  border-radius: 5px;
+}
+
+.additional_comment_div p{
+  padding-left: 10px;
+  padding-top: 10px;
+  width: 95%;
+}
+
+.additional_comment_wrapper{
+  display: flex;
+  flex-direction: row;
+}
+
+.additional_card_buttons{
+  display: flex;
+  flex-direction: row;
+  padding-top: 30px;
 }
 
 /* edit main css */
@@ -421,6 +458,11 @@ footer{
 
 .finished_wrapper{
   padding-left: 55px;
+}
+
+.finished_form{
+  padding-top: 50%;
+  float: right;
 }
 
 /* profile css */

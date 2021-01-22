@@ -6,11 +6,34 @@
    <?php if (empty($main_objective) || $_SESSION['id'] != $main_objective->users_id): ?>
      <?php require_once '../../error_components/wrong_users.php'; ?>
    <?php else: ?>
-     <form class="" method="post">
-       <input type="text" name="name" placeholder="Jméno">
-       <input type="date" name="finish_date" placeholder="Datum splnění">
-       <input type="submit" name="submit" value="Přidat">
-     </form>
+     <div class="div_backLink">
+       <a href="../main_objective/details-main_objective.php?id=<?php echo $_GET['id']; ?>"><button>Zpět</button></a>
+     </div>
+     <div class="form_wrapper">
+       <div class="add_form">
+         <div class="form_header">
+           <h1>Přidání podúkolu</h1>
+         </div>
+         <div class="div_form">
+           <form class="" method="post">
+             <div class="form_spacing">
+               <h3>Jméno podúkolu</h3>
+               <input type="text" name="name" placeholder="Jméno">
+             </div>
+             <div class="form_spacing">
+               <h3>Datum podúkolu</h3>
+               <input type="date" name="finish_date" placeholder="Datum splnění">
+             </div>
+             <div class="form_spacing">
+               <input class="form_send" type="submit" name="submit" value="Přidat">
+             </div>
+           </form>
+         </div>
+       </div>
+       <div class="div_add_picture">
+         <img class="image_responsive" src="../../css/pictures/add_picture.svg" alt="add_picture" width="500px">
+       </div>
+     </div>
      <?php
         if (isset($_POST['submit'])) {
           $name = $_POST['name'];
@@ -22,3 +45,4 @@
       ?>
    <?php endif; ?>
 </main>
+<?php require_once '../../footer.php'; ?>

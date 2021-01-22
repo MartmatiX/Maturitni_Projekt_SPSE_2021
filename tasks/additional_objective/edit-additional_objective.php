@@ -7,12 +7,38 @@
     <?php require_once '../../error_components/wrong_users.php'; ?>
   <?php else: ?>
     <?php $data = $db->run("SELECT * FROM additional_objectives WHERE id = ?", [$_GET['id']])->fetch(PDO::FETCH_OBJ); ?>
-    <form class="" method="post">
-      <input type="text" name="name" value="<?php echo $data->name ?>">
-      <input type="date" name="finish_date" value="<?php echo $data->finish_date ?>">
-      <input type="text" name="comment" value="<?php echo $data->comment ?>">
-      <input type="submit" name="submit" value="Změnit">
-    </form>
+    <div class="div_backLink">
+      <a href="../main_objective/details-main_objective.php?id=<?php echo $main_objective->id; ?>"><button>Zpět</button></a>
+    </div>
+    <div class="form_wrapper">
+      <div class="add_form">
+        <div class="form_header">
+          <h1>Editace dodatkového úkolu</h1>
+        </div>
+        <div class="div_form">
+          <form class="" method="post">
+            <div class="form_spacing">
+              <h3>Jméno dodatkového úkolu</h3>
+              <input type="text" name="name" value="<?php echo $data->name ?>">
+            </div>
+            <div class="form_spacing">
+              <h3>Datum dodatkového úkolu</h3>
+              <input type="date" name="finish_date" value="<?php echo $data->finish_date ?>">
+            </div>
+            <div class="form_spacing">
+              <h3>Popisek</h3>
+              <textarea name="comment" rows="8" cols="80"><?php echo $data->comment ?></textarea>
+            </div>
+            <div class="form_spacing">
+              <input class="form_send" type="submit" name="submit" value="Změnit">
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="div_edit_picture">
+        <img class="image_responsive" src="../../css/pictures/edit_picture.svg" alt="picture_edit" width="500px">
+      </div>
+    </div>
     <?php
       if (isset($_POST['submit'])) {
         $name = $_POST['name'];
@@ -27,3 +53,4 @@
      ?>
   <?php endif; ?>
 </main>
+<?php require_once '../../footer.php'; ?>

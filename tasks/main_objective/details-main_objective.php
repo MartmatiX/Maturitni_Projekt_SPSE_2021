@@ -97,16 +97,14 @@
                 </div>
               </div>
               <form method="post" id="card_form">
-                <div class="card_form">
-                  <div class="card_finish">
+                <div class="details_card_form">
+                  <div class="card_finish_delete">
                     <input class="form_finished" type="submit" name="finish_medium" value="">
+                    <input class="form_delete" type="submit" name="delete_medium" value="">
                     <input name='medium_id' type="text" value="<?php echo $medium_objective_data->id ?>" style='display:none'>
                   </div>
-                  <div class="card_delete">
-                    <input class="form_delete" type="submit" name="delete_medium" value="">
-                  </div>
                   <div class="">
-                    <a href="../additional_objective/add-additional_objective.php?id=<?php echo $medium_objective_data->id; ?>"><img src="../../css/pictures/icon_add.png" alt="icon_add" height="40px" width="40px"></a>
+                    <a href="../additional_objective/add-additional_objective.php?id=<?php echo $medium_objective_data->id; ?>"><img src="../../css/pictures/icon_add.png" alt="icon_add" height="50px" width="50px"></a>
                   </div>
                 </div>
               </form>
@@ -128,18 +126,18 @@
                   <div class="additional_comment_div">
                     <p><?php echo $additional_objective_data->comment ?></p>
                   </div>
-                </div>
-                <form method="post" id="card_form">
-                  <div class="card_form">
-                    <div class="card_finish">
-                      <input class="form_finished" type="submit" name="finish_additional" value="">
-                      <input name='additional_id' type="text" value="<?php echo $additional_objective_data->id ?>" style='display:none'>
-                    </div>
-                    <div class="card_delete">
-                      <input class="form_delete" type="submit" name="delete_additional" value="">
-                    </div>
+                  <div class="additional_form">
+                    <form method="post" id="card_form">
+                      <div class="card_form">
+                        <div class="additional_card_buttons">
+                          <input class="form_finished" type="submit" name="finish_additional" value="">
+                          <input class="form_delete" type="submit" name="delete_additional" value="">
+                          <input name='additional_id' type="text" value="<?php echo $additional_objective_data->id ?>" style='display:none'>
+                        </div>
+                      </div>
+                    </form>
                   </div>
-                </form>
+                </div>
               </div>
             </div>
         <?php endforeach; ?>
