@@ -1,7 +1,7 @@
 <?php require_once '../header.php'; ?>
 <main>
   <?php if (!isset($_SESSION['id'])): ?>
-    <h1>Nejste přihlášeni</h1>
+    <h1>Nejste přihlášen</h1>
     <div class="div_backLink">
       <a href="../users/login-user.php"><button>Zpět</button></a>
     </div>
