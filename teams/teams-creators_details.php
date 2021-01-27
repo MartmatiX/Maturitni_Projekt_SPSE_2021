@@ -13,6 +13,7 @@
        <a href="teams.php"><button>Zpět</button></a>
      </div>
      <a href="teams-members.php?id=<?php echo $team->id; ?>">Členi</a>
+     <a href="teams-delete_team.php?id=<?php echo $team->id; ?>">Odstranění týmu</a>
      <h3><?php echo $team->name; ?></h3>
    <?php endif; ?>
 </main>
