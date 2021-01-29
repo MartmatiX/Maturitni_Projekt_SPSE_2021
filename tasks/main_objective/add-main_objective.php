@@ -1,3 +1,23 @@
+<?php require_once '../../config/bootstrap.php'; ?>
+<?php
+  if (isset($_POST['submit'])) {
+    $name = htmlspecialchars($name = $_POST['name']);
+    $finish_date = htmlspecialchars($finish_date = $_POST['finish_date']);
+    if (isset($_POST['urgent'])) {
+      $urgent = 1;
+    }else {
+      $urgent = 0;
+    }
+    if ($db->run("INSERT INTO main_objectives(name, finish_date, urgent, users_id) VALUES(?,?,?,?)", [$name, $finish_date, $urgent, $_SESSION['id']])) {
+      header("Location: ../../objective_organizer.php");
+      exit();
+    }
+    else {
+      header("Location: add-main_objective.php");
+      exit();
+    }
+  }
+ ?>
 <?php require_once '../../header.php'; ?>
 <main>
   <?php if (isset($_SESSION['username'])): ?>
@@ -33,23 +53,6 @@
         <img class="image_responsive" src="../../css/pictures/add_picture.svg" alt="add_picture" width="500px">
       </div>
     </div>
-    <?php
-      if (isset($_POST['submit'])) {
-        $name = htmlspecialchars($name = $_POST['name']);
-        $finish_date = htmlspecialchars($finish_date = $_POST['finish_date']);
-        if (isset($_POST['urgent'])) {
-          $urgent = 1;
-        }else {
-          $urgent = 0;
-        }
-        if ($db->run("INSERT INTO main_objectives(name, finish_date, urgent, users_id) VALUES(?,?,?,?)", [$name, $finish_date, $urgent, $_SESSION['id']])) {
-          header("Location: ../../objective_organizer.php");
-        }
-        else {
-          header("Location: add-main_objective.php");
-        }
-      }
-     ?>
      <script type="text/javascript">
         var today = new Date();
         var dd = today.getDate();

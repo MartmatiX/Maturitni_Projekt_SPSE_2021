@@ -1,3 +1,20 @@
+<?php require_once '../../config/bootstrap.php'; ?>
+<?php
+  if (isset($_POST['submit'])) {
+    $name = htmlspecialchars($name = $_POST['name']);
+    $date = htmlspecialchars($date = $_POST['finish_date']);
+    $urgent = 0;
+    if (isset($_POST['urgent'])) {
+      $urgent = 1;
+    }
+    if ($db->run("UPDATE main_objectives SET name = ?, finish_date = ?, urgent = ? WHERE id = ?", [$name, $date, $urgent, $_GET['id']])) {
+      header("Location: ../../objective_organizer.php");
+      exit();
+    }else {
+      echo "error";
+    }
+  }
+?>
 <?php require_once '../../header.php'; ?>
 <?php $main_objective = $db->run("SELECT * FROM main_objectives WHERE id = ?", [$_GET['id']])->fetch(PDO::FETCH_OBJ); ?>
 <?php if (empty($main_objective) || $_SESSION['id'] != $main_objective->users_id): ?>
@@ -36,22 +53,6 @@
       <img class="image_responsive" src="../../css/pictures/edit_picture.svg" alt="picture_edit" width="500px">
     </div>
   </div>
-
-  <?php
-    if (isset($_POST['submit'])) {
-      $name = htmlspecialchars($name = $_POST['name']);
-      $date = htmlspecialchars($date = $_POST['finish_date']);
-      $urgent = 0;
-      if (isset($_POST['urgent'])) {
-        $urgent = 1;
-      }
-      if ($db->run("UPDATE main_objectives SET name = ?, finish_date = ?, urgent = ? WHERE id = ?", [$name, $date, $urgent, $_GET['id']])) {
-        header("Location: ../../objective_organizer.php");
-      }else {
-        echo "error";
-      }
-    }
-  ?>
 
   <script type="text/javascript">
     // dodělat check u checkboxu, pokud je urgent

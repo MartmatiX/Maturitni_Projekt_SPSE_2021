@@ -1,4 +1,3 @@
-<?php require_once 'config/bootstrap.php'; ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>

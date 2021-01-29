@@ -1,3 +1,14 @@
+<?php require_once '../../config/bootstrap.php'; ?>
+<?php
+   if (isset($_POST['submit'])) {
+     $name = $_POST['name'];
+     $finish_date = $_POST['finish_date'];
+     if ($db->run("INSERT INTO medium_objectives(name, finish_date, main_objectives_id) VALUES (?,?,?)", [$name, $finish_date, $_GET['id']])) {
+       header("Location: ../main_objective/details-main_objective.php?id=".$_GET['id']);
+       exit();
+     }
+   }
+ ?>
 <?php require_once '../../header.php'; ?>
 <main>
   <?php
@@ -34,15 +45,6 @@
          <img class="image_responsive" src="../../css/pictures/add_picture.svg" alt="add_picture" width="500px">
        </div>
      </div>
-     <?php
-        if (isset($_POST['submit'])) {
-          $name = $_POST['name'];
-          $finish_date = $_POST['finish_date'];
-          if ($db->run("INSERT INTO medium_objectives(name, finish_date, main_objectives_id) VALUES (?,?,?)", [$name, $finish_date, $_GET['id']])) {
-            header("Location: ../main_objective/details-main_objective.php?id=".$_GET['id']);
-          }
-        }
-      ?>
    <?php endif; ?>
 </main>
 <?php require_once '../../footer.php'; ?>

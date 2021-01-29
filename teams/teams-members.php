@@ -1,8 +1,19 @@
+<?php require_once '../config/bootstrap.php'; ?>
+
 <?php require_once '../header.php'; ?>
+<?php
+$team = $db->run("SELECT * FROM teams WHERE id = ?", [$_GET['id']])->fetch(PDO::FETCH_OBJ);
+   if (isset($_POST['add'])) {
+     if ($db->run("INSERT INTO teams_requests(id_user, id_team) VALUES (?,?)", [$_POST['id'], $_GET['id']])) {
+       header("Location: teams-members.php?id=".$_GET['id']);
+       exit();
+     }else{
+       header("Location: teams-members.php?id=".$_GET['id']);
+       exit();
+     }
+   }
+ ?>
 <main>
-  <?php
-    $team = $db->run("SELECT * FROM teams WHERE id = ?", [$_GET['id']])->fetch(PDO::FETCH_OBJ);
-   ?>
   <?php if ($team->id_creator != $_SESSION['id']): ?>
     <h1>K zobrazení tohoto obsahu nemáte dostatečná oprávnění</h1>
     <div class="div_backLink">
@@ -29,15 +40,6 @@
          </form>
        <?php endforeach; ?>
     <?php endif; ?>
-     <?php
-        if (isset($_POST['add'])) {
-          if ($db->run("INSERT INTO teams_requests(id_user, id_team) VALUES (?,?)", [$_POST['id'], $_GET['id']])) {
-            header("Location: teams-members.php?id=".$_GET['id']);
-          }else{
-            header("Location: teams-members.php?id=".$_GET['id']);
-          }
-        }
-      ?>
   <?php endif; ?>
 </main>
 <?php require_once '../footer.php'; ?>

@@ -1,3 +1,4 @@
+<?php require_once '../config/bootstrap.php'; ?>
 <?php require_once '../header.php'; ?>
   <main>
     <?php if (!isset($_SESSION['permission']) || $_SESSION['permission'] != 0): ?>

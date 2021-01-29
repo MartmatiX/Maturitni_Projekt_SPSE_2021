@@ -1,3 +1,29 @@
+<?php require_once '../config/bootstrap.php'; ?>
+<?php
+  if (isset($_POST['submit'])) {
+    $old_password = htmlspecialchars($_POST['old_password']);
+    $new_password = htmlspecialchars($_POST['new_password']);
+    $new_password_checker = htmlspecialchars($_POST['new_password_checker']);
+    if (!password_verify($old_password, $_SESSION['password'])) {
+      header("Location: changePassword-user.php?change=wrongOldPassword");
+      exit();
+    }elseif ($new_password != $new_password_checker) {
+      header("Location: changePassword-user.php?change=passwordsDoesntMatch");
+      exit();
+    }else{
+      $password = password_hash($new_password, PASSWORD_DEFAULT);
+      if ($db->run("UPDATE users SET password = ? WHERE id = ?", [$password, $_SESSION['id']])) {
+        session_unset();
+        session_destroy();
+        header("Location: login-user.php?change=success");
+        exit();
+      }else{
+        header("Location: login-user.php?change=failure");
+        exit();
+      }
+    }
+  }
+ ?>
 <?php require '../header.php'; ?>
 
 <?php if (!isset($_SESSION['username'])): ?>
@@ -38,27 +64,6 @@
       <img class="image_responsive" src="../css/pictures/change_password_picture.svg" alt="change_password_picture">
     </div>
   </div>
-  <?php
-    if (isset($_POST['submit'])) {
-      $old_password = htmlspecialchars($_POST['old_password']);
-      $new_password = htmlspecialchars($_POST['new_password']);
-      $new_password_checker = htmlspecialchars($_POST['new_password_checker']);
-      if (!password_verify($old_password, $_SESSION['password'])) {
-        header("Location: changePassword-user.php?change=wrongOldPassword");
-      }elseif ($new_password != $new_password_checker) {
-        header("Location: changePassword-user.php?change=passwordsDoesntMatch");
-      }else{
-        $password = password_hash($new_password, PASSWORD_DEFAULT);
-        if ($db->run("UPDATE users SET password = ? WHERE id = ?", [$password, $_SESSION['id']])) {
-          session_unset();
-          session_destroy();
-          header("Location: login-user.php?change=success");
-        }else{
-          header("Location: login-user.php?change=failure");
-        }
-      }
-    }
-   ?>
 <?php endif; ?>
 
 <?php require '../footer.php'; ?>

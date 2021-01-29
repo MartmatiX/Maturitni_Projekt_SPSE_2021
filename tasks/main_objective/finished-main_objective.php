@@ -1,15 +1,17 @@
+<?php require_once '../../config/bootstrap.php'; ?>
+<?php
+  if (isset($_POST['delete'])) {
+    if ($db->run("DELETE FROM main_objectives WHERE id = ?", [$_POST['finished_id']])) {
+      header("Location: finished-main_objective.php");
+      exit();
+    }
+  }
+ ?>
 <?php require_once '../../header.php'; ?>
 <main>
   <?php if (!isset($_SESSION['id'])): ?>
     <?php require_once '../../error_components/not_logged-in.php'; ?>
   <?php else: ?>
-    <?php
-      if (isset($_POST['delete'])) {
-        if ($db->run("DELETE FROM main_objectives WHERE id = ?", [$_POST['finished_id']])) {
-          header("Location: finished-main_objective.php");
-        }
-      }
-     ?>
     <?php $finished = $db->run("SELECT * FROM main_objectives WHERE users_id = ? AND finished = 1", [$_SESSION['id']])->fetchAll(PDO::FETCH_CLASS, 'MainObjective');?>
     <?php if (empty($finished)): ?>
       <div class="div_backLink">

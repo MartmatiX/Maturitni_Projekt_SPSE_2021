@@ -1,3 +1,30 @@
+<?php require_once '../config/bootstrap.php'; ?>
+<?php
+  if (isset($_POST['login'])) {
+    $username = htmlspecialchars($username = $_POST['username']);
+    $existence = $db->run("SELECT * FROM users WHERE username = ?", [$username])->fetch(PDO::FETCH_OBJ);
+    if (!empty($existence)) {
+      $password = $existence->password;
+      if (password_verify($_POST['password'], $existence->password)) {
+        $_SESSION['name'] = $existence->name;
+        $_SESSION['surname'] = $existence->surname;
+        $_SESSION['username'] = $existence->username;
+        $_SESSION['id'] = $existence->id;
+        $_SESSION['password'] = $existence->password;
+        $_SESSION['email'] = $existence->email;
+        $_SESSION['permission'] = $existence->permision;
+        header("Location: ../objective_organizer.php");
+        exit();
+      }else {
+        header("Location: login-user.php?wrongPassword");
+        exit();
+      }
+    }else{
+      header("Location: login-user.php?wrongUsername");
+      exit();
+    }
+  }
+?>
 <?php  require_once '../header.php';?>
 
   <main>
@@ -34,31 +61,5 @@
         require_once '../error_components/logged-in.php';
       } ?>
   </main>
-
-<?php
-
-  if (isset($_POST['login'])) {
-    $username = htmlspecialchars($username = $_POST['username']);
-    $existence = $db->run("SELECT * FROM users WHERE username = ?", [$username])->fetch(PDO::FETCH_OBJ);
-    if (!empty($existence)) {
-      $password = $existence->password;
-      if (password_verify($_POST['password'], $existence->password)) {
-        $_SESSION['name'] = $existence->name;
-        $_SESSION['surname'] = $existence->surname;
-        $_SESSION['username'] = $existence->username;
-        $_SESSION['id'] = $existence->id;
-        $_SESSION['password'] = $existence->password;
-        $_SESSION['email'] = $existence->email;
-        $_SESSION['permission'] = $existence->permision;
-        header("Location: ../objective_organizer.php");
-      }else {
-        header("Location: login-user.php?wrongPassword");
-      }
-    }else{
-      header("Location: login-user.php?wrongUsername");
-    }
-  }
-
-?>
 
 <?php require_once '../footer.php'; ?>

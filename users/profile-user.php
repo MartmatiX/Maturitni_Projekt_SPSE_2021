@@ -1,3 +1,12 @@
+<?php require_once '../config/bootstrap.php'; ?>
+<?php
+  if (isset($_POST['logOut'])) {
+    session_unset();
+    session_destroy();
+    header("Location: ../index.php");
+    exit();
+  }
+ ?>
 <?php require_once '../header.php'; ?>
 
 <main>
@@ -34,13 +43,6 @@
       </div>
     </div>
   <?php endif; ?>
-
-  <?php
-    if (isset($_POST['logOut'])) {
-      session_unset();
-      header("Location: ../index.php");
-    }
-   ?>
 </main>
 
 <?php require_once '../footer.php'; ?>

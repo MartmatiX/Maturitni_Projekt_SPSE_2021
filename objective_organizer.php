@@ -1,3 +1,24 @@
+<?php require_once 'config/bootstrap.php'; ?>
+<?php
+if (isset($_POST['finish'])) {
+  if ($db->run("UPDATE main_objectives SET finished = 1 WHERE id = ?", [$_POST['main_id']])) {
+    $db->run("DELETE FROM medium_objectives WHERE main_objectives_id = ?", [$_POST['main_id']]);
+    header("Location: tasks/main_objective/finished-main_objective.php");
+    exit();
+  }else {
+    echo "error";
+  }
+}
+if (isset($_POST['delete'])) {
+  if ($db->run("DELETE FROM main_objectives WHERE id = ?", [$_POST['main_id']])) {
+    header("Location: objective_organizer.php");
+    exit();
+  }else {
+    header("Location: objective_organizer.php?error");
+    exit();
+  }
+}
+?>
 <?php require_once 'header.php'; ?>
 
 <?php if (!isset($_SESSION['username'])): ?>
@@ -83,23 +104,6 @@
               </div>
             </form>
         </div>
-        <?php
-        if (isset($_POST['finish'])) {
-          if ($db->run("UPDATE main_objectives SET finished = 1 WHERE id = ?", [$_POST['main_id']])) {
-            $db->run("DELETE FROM medium_objectives WHERE main_objectives_id = ?", [$_POST['main_id']]);
-            header("Location: tasks/main_objective/finished-main_objective.php");
-          }else {
-            echo "error";
-          }
-        }
-        if (isset($_POST['delete'])) {
-          if ($db->run("DELETE FROM main_objectives WHERE id = ?", [$_POST['main_id']])) {
-            header("Location: objective_organizer.php");
-          }else {
-            header("Location: objective_organizer.php?error");
-          }
-        }
-      ?>
       <?php endforeach; ?>
     </div>
   </div>

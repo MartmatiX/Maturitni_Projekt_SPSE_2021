@@ -1,3 +1,37 @@
+<?php require_once '../../config/bootstrap.php'; ?>
+<?php
+  $main_objective_id = $_GET['id'];
+  if (isset($_POST['finish_medium'])) {
+    if ($db->run("UPDATE medium_objectives SET finished = 1 WHERE id = ?", [$_POST['medium_id']])) {
+      $db->run("UPDATE additional_objectives SET finished = 1 WHERE medium_objectives_id = ?", [$_POST['medium_id']]);
+      header("Location: details-main_objective.php?id=".$main_objective_id);
+      exit();
+    }else {
+
+    }
+  }
+
+  if (isset($_POST['delete_medium'])) {
+    if ($db->run("DELETE FROM medium_objectives WHERE id = ?", [$_POST['medium_id']])) {
+      header("Location: details-main_objective.php?id=".$main_objective_id);
+      exit();
+    }
+  }
+
+  if (isset($_POST['finish_additional'])) {
+    if ($db->run("UPDATE additional_objectives SET finished = 1 WHERE id = ?", [$_POST['additional_id']])) {
+      header("Location: details-main_objective.php?id=".$main_objective_id);
+      exit();
+    }
+  }
+
+  if (isset($_POST['delete_additional'])) {
+    if ($db->run("DELETE FROM additional_objectives WHERE id = ?", [$_POST['additional_id']])) {
+      header("Location: details-main_objective.php?id=".$main_objective_id);
+      exit();
+    }
+  }
+ ?>
 <?php require_once '../../header.php'; ?>
 <main>
   <?php $users_id = $db->run("SELECT users_id FROM main_objectives WHERE id = ?", [$_GET['id']])->fetch();?>
@@ -9,39 +43,9 @@
     </div>
 
     <?php
-      $main_objective_id = $_GET['id'];
       $main_objective = $db->run("SELECT * FROM main_objectives WHERE id = ?", [$main_objective_id])->fetch(PDO::FETCH_OBJ);
       $medium_objective = $db->run("SELECT * FROM medium_objectives WHERE main_objectives_id = ?", [$_GET['id']])->fetchAll(PDO::FETCH_CLASS, "MediumObjective");
     ?>
-
-    <?php
-      if (isset($_POST['finish_medium'])) {
-        if ($db->run("UPDATE medium_objectives SET finished = 1 WHERE id = ?", [$_POST['medium_id']])) {
-          $db->run("UPDATE additional_objectives SET finished = 1 WHERE medium_objectives_id = ?", [$_POST['medium_id']]);
-          header("Location: details-main_objective.php?id=".$main_objective_id);
-        }else {
-
-        }
-      }
-
-      if (isset($_POST['delete_medium'])) {
-        if ($db->run("DELETE FROM medium_objectives WHERE id = ?", [$_POST['medium_id']])) {
-          header("Location: details-main_objective.php?id=".$main_objective_id);
-        }
-      }
-
-      if (isset($_POST['finish_additional'])) {
-        if ($db->run("UPDATE additional_objectives SET finished = 1 WHERE id = ?", [$_POST['additional_id']])) {
-          header("Location: details-main_objective.php?id=".$main_objective_id);
-        }
-      }
-
-      if (isset($_POST['delete_additional'])) {
-        if ($db->run("DELETE FROM additional_objectives WHERE id = ?", [$_POST['additional_id']])) {
-          header("Location: details-main_objective.php?id=".$main_objective_id);
-        }
-      }
-     ?>
 
     <div class="organizer_wrapper">
       <div class="main_wrapper">

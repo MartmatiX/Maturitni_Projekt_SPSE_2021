@@ -1,9 +1,18 @@
+<?php require_once '../../config/bootstrap.php'; ?>
+<?php
+$medium_objective = $db->run("SELECT main_objectives.users_id, main_objectives.id FROM medium_objectives JOIN main_objectives ON main_objectives.id = medium_objectives.main_objectives_id WHERE medium_objectives.id = ? AND main_objectives.finished = 0", [$_GET['id']])->fetch(PDO::FETCH_OBJ);
+$main_objective_id = $db->run("SELECT main_objectives_id FROM medium_objectives WHERE id = ?", [$_GET['id']])->fetch(PDO::FETCH_OBJ);
+  if (isset($_POST['submit'])) {
+    $name = $_POST['name'];
+    $finish_date = $_POST['finish_date'];
+    if ($db->run("UPDATE medium_objectives SET name = ?, finish_date = ? WHERE id = ?", [$name, $finish_date, $_GET['id']])) {
+      header("Location: ../main_objective/details-main_objective.php?id=$medium_objective->id");
+      exit();
+    }
+  }
+ ?>
 <?php require_once '../../header.php'; ?>
 <main>
-  <?php
-    $medium_objective = $db->run("SELECT main_objectives.users_id, main_objectives.id FROM medium_objectives JOIN main_objectives ON main_objectives.id = medium_objectives.main_objectives_id WHERE medium_objectives.id = ? AND main_objectives.finished = 0", [$_GET['id']])->fetch(PDO::FETCH_OBJ);
-    $main_objective_id = $db->run("SELECT main_objectives_id FROM medium_objectives WHERE id = ?", [$_GET['id']])->fetch(PDO::FETCH_OBJ);
-  ?>
   <?php if (empty($medium_objective) || $_SESSION['id'] != $medium_objective->users_id): ?>
     <?php require_once '../../error_components/wrong_users.php'; ?>
   <?php else: ?>
@@ -36,15 +45,6 @@
         <img class="image_responsive" src="../../css/pictures/edit_picture.svg" alt="picture_edit" width="500px">
       </div>
     </div>
-    <?php
-      if (isset($_POST['submit'])) {
-        $name = $_POST['name'];
-        $finish_date = $_POST['finish_date'];
-        if ($db->run("UPDATE medium_objectives SET name = ?, finish_date = ? WHERE id = ?", [$name, $finish_date, $_GET['id']])) {
-          header("Location: ../main_objective/details-main_objective.php?id=$medium_objective->id");
-        }
-      }
-     ?>
   <?php endif; ?>
 </main>
 <?php require_once '../../footer.php'; ?>

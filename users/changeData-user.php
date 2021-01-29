@@ -1,5 +1,39 @@
+<?php require_once '../config/bootstrap.php'; ?>
+<?php
+  if (isset($_POST['submit'])) {
+    $name = htmlspecialchars($_POST['name']);
+    $surname = htmlspecialchars($_POST['surname']);
+    $email = htmlspecialchars($_POST['email']);
+    $username = htmlspecialchars($_POST['username']);
+    if ($_SESSION['username'] != $username) {
+      $username_existence = $db->run("SELECT username FROM users WHERE username = ?", [$username])->fetchAll();
+      if (!empty($username_existence)) {
+        header("Location: changeData-user.php?data=usernameTaken");
+      }else {
+        if ($db->run("UPDATE users SET name = ?, surname = ?, email = ?, username = ? WHERE id = ?", [$name, $surname, $email, $username, $_SESSION['id']])) {
+          session_unset();
+          session_destroy();
+          header("Location: login-user.php?data=changed");
+          exit();
+        }else {
+          header("Location: changeData-user?change=failure");
+          exit();
+        }
+    }
+  }else {
+    if ($db->run("UPDATE users SET name = ?, surname = ?, email = ?, username = ? WHERE id = ?", [$name, $surname, $email, $username, $_SESSION['id']])) {
+      session_unset();
+      session_destroy();
+      header("Location: login-user.php?data=changed");
+      exit();
+    }else {
+      header("Location: changeData-user?change=failure");
+      exit();
+    }
+  }
+  }
+ ?>
 <?php require '../header.php'; ?>
-
 <?php if (!isset($_SESSION['username'])): ?>
   <h1>Vyskytla se chyba</h1>
   <a href="../objective_organizer.php">zpět</a>
@@ -48,36 +82,6 @@
       <img class="image_responsive" src="../css/pictures/edit_profile_picture.svg" alt="edit_picture" width="500px">
     </div>
   </div>
-  <?php
-    if (isset($_POST['submit'])) {
-      $name = htmlspecialchars($_POST['name']);
-      $surname = htmlspecialchars($_POST['surname']);
-      $email = htmlspecialchars($_POST['email']);
-      $username = htmlspecialchars($_POST['username']);
-      if ($_SESSION['username'] != $username) {
-        $username_existence = $db->run("SELECT username FROM users WHERE username = ?", [$username])->fetchAll();
-        if (!empty($username_existence)) {
-          header("Location: changeData-user.php?data=usernameTaken");
-        }else {
-          if ($db->run("UPDATE users SET name = ?, surname = ?, email = ?, username = ? WHERE id = ?", [$name, $surname, $email, $username, $_SESSION['id']])) {
-            session_unset();
-            session_destroy();
-            header("Location: login-user.php?data=changed");
-          }else {
-            header("Location: changeData-user?change=failure");
-          }
-      }
-    }else {
-      if ($db->run("UPDATE users SET name = ?, surname = ?, email = ?, username = ? WHERE id = ?", [$name, $surname, $email, $username, $_SESSION['id']])) {
-        session_unset();
-        session_destroy();
-        header("Location: login-user.php?data=changed");
-      }else {
-        header("Location: changeData-user?change=failure");
-      }
-    }
-    }
-   ?>
 <?php endif; ?>
 
 <?php require '../footer.php'; ?>
