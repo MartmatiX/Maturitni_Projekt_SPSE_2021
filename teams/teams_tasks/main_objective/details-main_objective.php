@@ -65,8 +65,8 @@
       <div class="flex_wrap">
       <?php foreach ($medium_objective as $medium_objective_data): ?>
         <?php
-            $counter = $db->run("SELECT count(id) AS 'celkem' FROM additional_objectives WHERE medium_objectives_id = ?", [$medium_objective_data->id])->fetch(PDO::FETCH_OBJ);
-            $counter_finished = $db->run("SELECT count(id) AS 'splneno' FROM additional_objectives WHERE medium_objectives_id = ? AND finished = 1", [$medium_objective_data->id])->fetch(PDO::FETCH_OBJ);
+            $counter = $db->run("SELECT count(id) AS 'celkem' FROM teams_additional_objectives WHERE teams_medium_objectives_id = ?", [$medium_objective_data->id])->fetch(PDO::FETCH_OBJ);
+            $counter_finished = $db->run("SELECT count(id) AS 'splneno' FROM teams_additional_objectives WHERE teams_medium_objectives_id = ? AND finished = 1", [$medium_objective_data->id])->fetch(PDO::FETCH_OBJ);
             if ($counter->celkem == 0) {
               $text = "Žádné podúkoly";
               $percentage = 0;

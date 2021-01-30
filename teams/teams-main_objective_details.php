@@ -36,8 +36,10 @@ if (isset($_POST['delete'])) {
      <div class="div_backLink">
        <a href="teams.php"><button>Zpět</button></a>
      </div>
-     <a href="teams-members.php?id=<?php echo $team->id; ?>">Členi</a>
-     <a href="teams-delete_team.php?id=<?php echo $team->id; ?>">Odstranění týmu</a>
+     <?php if ($_SESSION['id'] == $team->id_creator): ?>
+       <a href="teams-members.php?id=<?php echo $team->id; ?>">Členi</a>
+       <a href="teams-delete_team.php?id=<?php echo $team->id; ?>">Odstranění týmu</a>
+     <?php endif; ?>
      <h1>Tým: <?php echo $team->name; ?></h1>
 
      <?php
@@ -73,8 +75,8 @@ if (isset($_POST['delete'])) {
           <?php if (!empty($objectives)): ?>
         <?php foreach ($objectives as $mainObjective): ?>
           <?php
-              $counter = $db->run("SELECT count(id) AS 'celkem' FROM medium_objectives WHERE main_objectives_id = ?", [$mainObjective->id])->fetch(PDO::FETCH_OBJ);
-              $counter_finished = $db->run("SELECT count(id) AS 'splneno' FROM medium_objectives WHERE main_objectives_id = ? AND finished = 1", [$mainObjective->id])->fetch(PDO::FETCH_OBJ);
+              $counter = $db->run("SELECT count(id) AS 'celkem' FROM teams_medium_objectives WHERE teams_main_objectives_id = ?", [$mainObjective->id])->fetch(PDO::FETCH_OBJ);
+              $counter_finished = $db->run("SELECT count(id) AS 'splneno' FROM teams_medium_objectives WHERE teams_main_objectives_id = ? AND finished = 1", [$mainObjective->id])->fetch(PDO::FETCH_OBJ);
               if ($counter->celkem == 0) {
                 $text = "Žádné podúkoly";
                 $percentage = 0;
