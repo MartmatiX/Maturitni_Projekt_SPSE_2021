@@ -1,26 +1,33 @@
 <?php require_once '../config/bootstrap.php'; ?>
 
 <?php
+
+$users_teams = $db->run("SELECT * FROM users_teams WHERE id_users = ?", [$_SESSION['id']])->fetchAll(PDO::FETCH_OBJ);
+$inTeam = array();
+foreach($users_teams as $arrayData){
+  array_push($inTeam, $arrayData->id_users);
+}
+
 $team = $db->run("SELECT * FROM teams WHERE id = ?", [$_GET['id']])->fetch(PDO::FETCH_OBJ);
 if (isset($_POST['finish'])) {
-  if ($db->run("UPDATE main_objectives SET finished = 1 WHERE id = ?", [$_POST['main_id']])) {
-    $db->run("DELETE FROM medium_objectives WHERE main_objectives_id = ?", [$_POST['main_id']]);
-    header("Location: tasks/main_objective/finished-main_objective.php");
+  if ($db->run("UPDATE teams_main_objectives SET finished = 1 WHERE id = ?", [$_POST['main_id']])) {
+    $db->run("DELETE FROM teams_medium_objectives WHERE teams_main_objectives_id = ?", [$_POST['main_id']]);
+    header("Location: teams-main_objective_details.php?id=".$_GET['id']);
   }else {
     echo "error";
   }
 }
 if (isset($_POST['delete'])) {
-  if ($db->run("DELETE FROM main_objectives WHERE id = ?", [$_POST['main_id']])) {
-    header("Location: objective_organizer.php");
+  if ($db->run("DELETE FROM teams_main_objectives WHERE id = ?", [$_POST['main_id']])) {
+    header("Location: teams-main_objective_details.php?id=".$_GET['id']);
   }else {
-    header("Location: objective_organizer.php?error");
+    header("Location: teams-main_objective_details.php?id=".$_GET['id']);
   }
 }
 ?>
 <?php require_once '../header.php'; ?>
 <main>
-   <?php if ($team->id_creator != $_SESSION['id']): ?>
+   <?php if (!in_array($_SESSION['id'], $inTeam) && $_SESSION['id'] != $team->id_creator): ?>
      <h1>K zobrazení tohoto obsahu nemáte dostatečná oprávnění</h1>
      <div class="div_backLink">
        <a href="teams.php"><button>Zpět</button></a>
@@ -31,10 +38,10 @@ if (isset($_POST['delete'])) {
      </div>
      <a href="teams-members.php?id=<?php echo $team->id; ?>">Členi</a>
      <a href="teams-delete_team.php?id=<?php echo $team->id; ?>">Odstranění týmu</a>
-     <h3><?php echo $team->name; ?></h3>
+     <h1>Tým: <?php echo $team->name; ?></h1>
 
      <?php
-        $objectives = $db->run("SELECT * FROM teams_main_objectives WHERE teams_id = ?", [$_GET['id']])->fetchAll(PDO::FETCH_OBJ);
+        $objectives = $db->run("SELECT * FROM teams_main_objectives WHERE teams_id = ? AND finished = 0 ORDER BY urgent desc, finish_date asc", [$_GET['id']])->fetchAll(PDO::FETCH_OBJ);
       ?>
 
       <div class="organizer_wrapper">
@@ -46,14 +53,20 @@ if (isset($_POST['delete'])) {
               <h1>Trvající úkoly</h1>
             <?php endif; ?>
             <div class="organizer_header_links">
-              <a href="tasks/main_objective/finished-main_objective.php" class="link_spacing_right">Splněné úkoly</a>
+              <a href="teams_tasks/main_objective/finished-main_objective.php?id=<?php echo $_GET['id']; ?>" class="link_spacing_right">Splněné úkoly</a>
               <p>|</p>
               <a href="#" class="link_spacing_left">Nesplněné úkoly</a>
             </div>
           </div>
-          <div class="organizer_add">
-            <a href="tasks/main_objective/add-main_objective.php"><button>Přidat</button></a>
-          </div>
+          <?php if ($_SESSION['id'] == $team->id_creator): ?>
+            <div class="organizer_add">
+              <a href="teams_tasks/main_objective/add-main_objective.php?id=<?php echo $_GET['id']; ?>"><button>Přidat</button></a>
+            </div>
+          <?php else: ?>
+            <div class="organizer_add">
+              <h3>Přidat úkol může pouze zakladatel</h3>
+            </div>
+          <?php endif; ?>
         </div>
 
         <div class="flex_wrap">
@@ -101,14 +114,16 @@ if (isset($_POST['delete'])) {
                     <input class="urgent" value="<?php echo $mainObjective->urgent ?>" style='display:none'>
                   </div>
                   <div class="card_details">
-                    <a href="tasks/main_objective/details-main_objective.php?id=<?php echo $mainObjective->id ?>"><img src="css/pictures/icon_details.png" alt="icon_details" height="40px" width="40px"></a>
+                    <a href="teams_tasks/main_objective/details-main_objective.php?id=<?php echo $mainObjective->id ?>"><img src="../css/pictures/icon_details.png" alt="icon_details" height="40px" width="40px"></a>
                   </div>
                   <div class="card_edit">
-                    <a href="tasks/main_objective/edit-main_objective.php?id=<?php echo $mainObjective->id ?>"><img src="css/pictures/icon_edit.png" alt="icon_edit" height="40px" width="40px"></a>
+                    <a href="teams_tasks/main_objective/edit-main_objective.php?id=<?php echo $mainObjective->id ?>"><img src="../css/pictures/icon_edit.png" alt="icon_edit" height="40px" width="40px"></a>
                   </div>
-                  <div class="card_delete">
-                    <input class="form_delete" type="submit" name="delete" value="">
-                  </div>
+                  <?php if ($_SESSION['id'] == $team->id_creator): ?>
+                    <div class="card_delete">
+                      <input class="form_delete" type="submit" name="delete" value="">
+                    </div>
+                  <?php endif; ?>
                 </div>
               </form>
           </div>
@@ -117,6 +132,14 @@ if (isset($_POST['delete'])) {
     </div>
     <?php endif; ?>
 
+    <script type="text/javascript">
+      let array = document.getElementsByClassName('urgent');
+      for (let i = 0; i < array.length; i++) {
+        if (array[i].value == 1) {
+          document.getElementsByClassName('card_wrapper')[i].style.border = " 3px solid orange";
+        }
+      }
+    </script>
 
    <?php endif; ?>
 </main>

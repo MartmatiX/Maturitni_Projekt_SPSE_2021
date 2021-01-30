@@ -17,9 +17,9 @@
       <h1>Nejste zakladatel žádného týmu</h1>
     <?php else: ?>
       <h1>Vámi založené týmy:</h1>
-       <?php foreach ($createdTeams as $teams): ?>
-         <h3><?php echo $teams->name; ?></h3>
-         <a href="teams-creators_details.php?id=<?php echo $teams->id ?>">Zobrazit</a>
+       <?php foreach ($createdTeams as $createdTeam): ?>
+         <h3><?php echo $createdTeam->name; ?></h3>
+         <a href="teams-main_objective_details.php?id=<?php echo $createdTeam->id ?>">Zobrazit</a>
        <?php endforeach; ?>
     <?php endif; ?>
 
@@ -29,8 +29,10 @@
     <?php if (empty($teams)): ?>
       <h1>Nejste členem žádného týmu</h1>
     <?php else: ?>
+      <h1>Ostatní týmy</h1>
       <?php foreach ($teams as $team): ?>
         <h3><?php echo $team->name; ?></h3>
+        <a href="teams-main_objective_details.php?id=<?php echo $team->id ?>">Zobrazit</a>
       <?php endforeach; ?>
     <?php endif; ?>
   <?php endif; ?>

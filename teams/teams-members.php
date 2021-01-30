@@ -5,10 +5,10 @@
 $team = $db->run("SELECT * FROM teams WHERE id = ?", [$_GET['id']])->fetch(PDO::FETCH_OBJ);
    if (isset($_POST['add'])) {
      if ($db->run("INSERT INTO teams_requests(id_user, id_team) VALUES (?,?)", [$_POST['id'], $_GET['id']])) {
-       header("Location: teams-members.php?id=".$_GET['id']);
+       header("Location: teams-main_objective_details.php?id=".$_GET['id']);
        exit();
      }else{
-       header("Location: teams-members.php?id=".$_GET['id']);
+       header("Location: teams-main_objective_details.php?id=".$_GET['id']);
        exit();
      }
    }
@@ -21,7 +21,7 @@ $team = $db->run("SELECT * FROM teams WHERE id = ?", [$_GET['id']])->fetch(PDO::
     </div>
   <?php else: ?>
     <div class="div_backLink">
-      <a href="teams-creators_details.php?id=<?php echo $_GET['id']; ?>"><button>Zpět</button></a>
+      <a href="teams-main_objective_details.php?id=<?php echo $_GET['id']; ?>"><button>Zpět</button></a>
     </div>
     <form class=""  method="post">
       <input type="text" name="username" placeholder="Uživatelské jméno">
