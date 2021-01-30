@@ -87,7 +87,9 @@
             <div class="details_card_medium">
               <div class="details_card_header">
                 <h4><?php echo $medium_objective_data->name; ?></h4>
-                <a href="../medium_objective/edit-medium_objective.php?id=<?php echo $medium_objective_data->id;?>"><img src="../../css/pictures/icon_edit.png" alt="edit_icon" height="40px" width="40px"></a>
+                <?php if ($medium_objective_data->finished == 0): ?>
+                  <a href="../medium_objective/edit-medium_objective.php?id=<?php echo $medium_objective_data->id;?>"><img src="../../css/pictures/icon_edit.png" alt="edit_icon" height="40px" width="40px"></a>
+                <?php endif; ?>
               </div>
               <div class="card_progressBar">
                 <progress value="<?php echo $percentage?>" max="100"></progress>
@@ -103,13 +105,22 @@
               <form method="post" id="card_form">
                 <div class="details_card_form">
                   <div class="card_finish_delete">
-                    <input class="form_finished" type="submit" name="finish_medium" value="">
-                    <input class="form_delete" type="submit" name="delete_medium" value="">
-                    <input name='medium_id' type="text" value="<?php echo $medium_objective_data->id ?>" style='display:none'>
+                    <?php if ($medium_objective_data->finished == 0): ?>
+                      <?php if ($percentage == 100): ?>
+                        <input class="form_finished" type="submit" name="finish_medium" value="">
+                      <?php endif; ?>
+                      <input class="form_delete" type="submit" name="delete_medium" value="">
+                      <input name='medium_id' type="text" value="<?php echo $medium_objective_data->id ?>" style='display:none'>
+                    <?php else: ?>
+                      <input class="form_delete" type="submit" name="delete_medium" value="">
+                      <input name='medium_id' type="text" value="<?php echo $medium_objective_data->id ?>" style='display:none'>
+                    <?php endif; ?>
                   </div>
-                  <div class="">
-                    <a href="../additional_objective/add-additional_objective.php?id=<?php echo $medium_objective_data->id; ?>"><img src="../../css/pictures/icon_add.png" alt="icon_add" height="50px" width="50px"></a>
-                  </div>
+                  <?php if ($medium_objective_data->finished == 0): ?>
+                    <div class="">
+                      <a href="../additional_objective/add-additional_objective.php?id=<?php echo $medium_objective_data->id; ?>"><img src="../../css/pictures/icon_add.png" alt="icon_add" height="50px" width="50px"></a>
+                    </div>
+                  <?php endif; ?>
                 </div>
               </form>
             </div>
