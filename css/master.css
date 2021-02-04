@@ -9,6 +9,10 @@
   font-family: Roboto;
 }
 
+body{
+  height: 100%;
+}
+
 h1{
   color: rgb(9, 64, 103);
   font-size: 66px;
@@ -180,6 +184,7 @@ footer{
   margin-bottom: 20px;
   border: 1px solid rgb(33, 150, 242);
   border-radius: 6px;
+  box-shadow: 5px 10px rgb(24, 111, 178);
 }
 
 .main_wrapper{
@@ -359,6 +364,7 @@ footer{
   border: 1px solid rgb(33, 150, 242);
   border-radius: 6px;
   padding-bottom: 10px;
+  box-shadow: 5px 10px rgb(24, 111, 178);
 }
 
 .details_card_medium{
@@ -536,4 +542,20 @@ footer{
 /* footer css */
 .footer_text{
   font-size: 20px;
+}
+
+/* teams members css */
+.teams_table{
+  padding-top: 40px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.teams_table table{
+  border-collapse: collapse;
+}
+
+td, th{
+  border: 2px solid rgb(24, 111, 178);
+  padding: 10px;
 }

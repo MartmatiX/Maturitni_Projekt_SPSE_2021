@@ -36,17 +36,19 @@ if (isset($_POST['delete'])) {
      <div class="div_backLink">
        <a href="teams.php"><button>Zpět</button></a>
      </div>
+
+     <div class="organizer_wrapper">
+     <h1><?php echo $team->name; ?></h1>
      <?php if ($_SESSION['id'] == $team->id_creator): ?>
-       <a href="teams-members.php?id=<?php echo $team->id; ?>">Členi</a>
-       <a href="teams-delete_team.php?id=<?php echo $team->id; ?>">Odstranění týmu</a>
+       <div class="organizer_header_links">
+         <a href="teams-members.php?id=<?php echo $team->id; ?>" style="padding-bottom:30px;">Členi</a>
+       </div>
      <?php endif; ?>
-     <h1>Tým: <?php echo $team->name; ?></h1>
 
      <?php
         $objectives = $db->run("SELECT * FROM teams_main_objectives WHERE teams_id = ? AND finished = 0 ORDER BY urgent desc, finish_date asc", [$_GET['id']])->fetchAll(PDO::FETCH_OBJ);
       ?>
 
-      <div class="organizer_wrapper">
         <div class="main_wrapper">
           <div class="organizer_header">
             <?php if (empty($objectives)): ?>
