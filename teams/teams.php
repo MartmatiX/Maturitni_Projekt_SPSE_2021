@@ -51,7 +51,9 @@
                <h5><?php echo $user_counter->pocet_uzivatelu; ?> uživatelů</h5>
              </div>
            </div>
-           <a href="teams-main_objective_details.php?id=<?php echo $createdTeam->id ?>">Detaily</a>
+           <div class="detail_div">
+             <a href="teams-main_objective_details.php?id=<?php echo $createdTeam->id ?>">Detaily</a>
+           </div>
          </div>
        <?php endforeach; ?>
        </div>
@@ -59,7 +61,7 @@
 
     <?php
       $teams = $db->run("SELECT * FROM teams JOIN users_teams ON teams.id = users_teams.id_teams WHERE users_teams.id_users = ?", [$_SESSION['id']])->fetchAll(PDO::FETCH_OBJ);
-     ?>
+    ?>
 
       <div class="organizer_header">
         <?php if (empty($teams)): ?>
@@ -69,11 +71,26 @@
       </div>
       <div class="flex_wrap">
         <?php foreach ($teams as $team): ?>
+          <?php
+            $creator = $db->run("SELECT username FROM users WHERE id = ?", [$team->id_creator])->fetch(PDO::FETCH_OBJ);
+
+          ?>
           <div class="card_wrapper">
             <div class="card_header">
               <h4><?php echo $team->name; ?></h4>
             </div>
-            <a href="teams-main_objective_details.php?id=<?php echo $team->id ?>">Zobrazit</a>
+            <div class="card_progressBar"></div>
+            <div class="card_counter_date">
+              <div class="card_counter">
+                <h5>Zakladatel: <?php echo $creator->username; ?></h5>
+              </div>
+              <div class="card_date">
+
+              </div>
+            </div>
+            <div class="detail_div">
+              <a href="teams-main_objective_details.php?id=<?php echo $team->id ?>">Zobrazit</a>
+            </div>
           </div>
         <?php endforeach; ?>
       </div>

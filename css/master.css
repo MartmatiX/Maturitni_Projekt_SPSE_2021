@@ -544,6 +544,17 @@ footer{
   font-size: 20px;
 }
 
+/* teams css */
+.detail_div{
+  text-align: center;
+  padding-top: 10%;
+}
+
+.detail_div a{
+  text-decoration: none;
+  color: white;
+}
+
 /* teams members css */
 .teams_table{
   padding-top: 40px;
