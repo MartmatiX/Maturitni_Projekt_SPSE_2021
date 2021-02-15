@@ -41,7 +41,7 @@ if (isset($_POST['delete'])) {
           <div class="organizer_header_links">
             <a href="tasks/main_objective/finished-main_objective.php" class="link_spacing_right">Splněné úkoly</a>
             <p>|</p>
-            <a href="#" class="link_spacing_left">Nesplněné úkoly</a>
+            <a href="tasks/main_objective/not_finished-main_objective.php" class="link_spacing_left">Nesplněné úkoly</a>
           </div>
         </div>
         <div class="organizer_add">
@@ -104,6 +104,13 @@ if (isset($_POST['delete'])) {
               </div>
             </form>
         </div>
+        <?php
+          $currentDate = date("Y-m-d");
+          $finish_date = $mainObjective->finish_date;
+          if ($currentDate > $finish_date) {
+            $db->run("UPDATE main_objectives SET finished = 2 WHERE id = ?", [$mainObjective->id]);
+          }
+         ?>
       <?php endforeach; ?>
     </div>
   </div>

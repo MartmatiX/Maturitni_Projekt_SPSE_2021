@@ -39,34 +39,34 @@
                 <div class="">
                   <div class="form_spacing">
                     <h3>Jméno</h3>
-                    <input type="text" name="name" placeholder="Jméno" pattern="^[A-ZĚŠČŘŽÝÁÍÉÚ]{1}[a-zěščřžýáíéú]{1,25}$" required>
+                    <input type="text" id="name" name="name" placeholder="Jméno" pattern="^[A-ZĚŠČŘŽÝÁÍÉÚ]{1}[a-zěščřžýáíéú]{1,25}$" required>
                   </div>
                   <div class="form_spacing">
                     <h3>Příjmení</h3>
-                    <input type="text" name="surname" placeholder="Příjmení" pattern="^[A-ZĚŠČŘŽÝÁÍÉÚ]{1}[a-zěščřžýáíéúů]{1,25}$" required>
+                    <input type="text" id="surname" name="surname" placeholder="Příjmení" pattern="^[A-ZĚŠČŘŽÝÁÍÉÚ]{1}[a-zěščřžýáíéúů]{1,25}$" required>
                   </div>
                   <div class="form_spacing">
                     <h3>E-mailová adresa</h3>
-                    <input type="text" name="email" placeholder="E-mail" pattern="^[a-zěščřžýáíéůúA-ZĚŠČŘŽÝÁÍÉÚ.-_1-9]{1,}[@][a-z]{1,}[.][a-z]{1,}$" required>
+                    <input type="text" id="email" name="email" placeholder="E-mail" pattern="^[a-zěščřžýáíéůúA-ZĚŠČŘŽÝÁÍÉÚ.-_1-9]{1,}[@][a-z]{1,}[.][a-z]{1,}$" required>
                   </div>
                 </div>
                 <div class="input_spacing">
                   <div class="form_spacing">
                     <h3>Uživatelské jméno</h3>
-                    <input type="text" name="username" placeholder="Uživatelké jméno" required>
+                    <input type="text" id="username" name="username" placeholder="Uživatelké jméno" pattern="^.{3,}$" required>
                   </div>
                   <div class="form_spacing">
                     <h3>Heslo</h3>
-                    <input type="password" name="password" placeholder="Heslo" required>
+                    <input type="password" id="password" name="password" placeholder="Heslo" pattern="^.{6,}$" required>
                   </div>
                   <div class="form_spacing">
                     <h3>Ověření hesla</h3>
-                    <input type="password" name="password_repeat" placeholder="Heslo znovu" required>
+                    <input type="password" id="password_repeat" name="password_repeat" placeholder="Heslo znovu" pattern="^.{6,}$" required>
                   </div>
                 </div>
               </div>
               <div class="register_submit">
-                <input class="form_send" type="submit" name="register" value="Registrovat se">
+                <input class="form_send" id="submit" type="submit" name="register" value="Registrovat se">
               </div>
             </form>
           </div>
@@ -75,7 +75,6 @@
           <img class="image_responsive" src="../css/pictures/register_picture.svg" alt="register_picture" width="500px">
         </div>
       </div>
-
     <?php endif; ?>
 
     <?php if (isset($_SESSION['username'])) {
