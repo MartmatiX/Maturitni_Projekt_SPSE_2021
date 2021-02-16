@@ -65,11 +65,19 @@ form input[type=password]{
   font-size: 18px;
 }
 
+main{
+  padding-bottom: 70px;
+}
+
 footer{
   background-color: rgb(24, 111, 178);
   color: white;
-  padding: 1%;
   text-align: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
+  vertical-align: bottom;
 }
 
 /* class css*/
@@ -542,6 +550,7 @@ footer{
 /* footer css */
 .footer_text{
   font-size: 20px;
+  padding-top: 0.8rem;
 }
 
 /* teams css */
