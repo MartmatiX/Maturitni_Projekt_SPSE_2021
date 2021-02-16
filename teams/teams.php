@@ -11,6 +11,8 @@
   <?php else: ?>
     <?php
       $createdTeams = $db->run("SELECT * FROM teams WHERE id_creator = ?", [$_SESSION['id']])->fetchAll(PDO::FETCH_OBJ);
+
+      $count = $db->run("SELECT count('id') AS pocet FROM teams_requests WHERE id_user = ?", [$_SESSION['id']])->fetch(PDO::FETCH_OBJ);
      ?>
      <div class="main_wrapper">
        <div class="organizer_header">
@@ -19,14 +21,14 @@
           <div class="organizer_header_links">
             <a href="create_team.php" class="link_spacing_right">Založit nový</a>
             <p>|</p>
-            <a href="teams_invitations.php" class="link_spacing_left">Pozvánky</a>
+            <a href="teams_invitations.php" class="link_spacing_left">Pozvánky (<?php echo $count->pocet ?>)</a>
           </div>
         <?php else: ?>
           <h1>Vámi založené týmy:</h1>
           <div class="organizer_header_links">
             <a href="create_team.php" class="link_spacing_right">Založit nový</a>
             <p>|</p>
-            <a href="teams_invitations.php" class="link_spacing_left">Pozvánky</a>
+            <a href="teams_invitations.php" class="link_spacing_left">Pozvánky (<?php echo $count->pocet; ?>)</a>
           </div>
        </div>
      </div>
