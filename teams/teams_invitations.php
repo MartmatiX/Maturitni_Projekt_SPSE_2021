@@ -37,7 +37,7 @@
      <?php else: ?>
        <?php foreach ($active_invitations as $active_invitation): ?>
          <?php
-            $teams_info = $db->run("SELECT * FROM teams JOIN teams_requests ON teams.id = teams_requests.id_team WHERE teams.id = ?", [$active_invitation->id_team])->fetchAll(PDO::FETCH_OBJ);
+            $teams_info = $db->run("SELECT * FROM teams JOIN teams_requests ON teams.id = teams_requests.id_team WHERE teams.id = ? LIMIT 1", [$active_invitation->id_team])->fetchAll(PDO::FETCH_OBJ);
           ?>
           <?php foreach ($teams_info as $team_info): ?>
             <h3><?php echo $team_info->name; ?></h3>

@@ -32,8 +32,9 @@ $team = $db->run("SELECT * FROM teams WHERE id = ?", [$_GET['id']])->fetch(PDO::
 
     <div class="organizer_wrapper">
       <form class=""  method="post">
+        <h3 style="padding-bottom: 10px;">Zadejte uživatelské jméno uživatele, kterého chcete přidat.</h3>
         <input type="text" name="username" placeholder="Uživatelské jméno">
-        <input type="submit" name="search" value="Hledat">
+        <input type="submit" class="form_send" name="search" value="Hledat">
       </form>
 
       <?php if (isset($_POST['search'])): ?>
@@ -42,15 +43,37 @@ $team = $db->run("SELECT * FROM teams WHERE id = ?", [$_GET['id']])->fetch(PDO::
           $users = $db->run("SELECT * FROM users WHERE username = ?", [$username])->fetchAll(PDO::FETCH_OBJ);
          ?>
          <?php foreach ($users as $user): ?>
-           <h3><?php echo $user->name ?></h3>
-           <form class="" method="post">
-             <input type="text" name="id" value="<?php echo $user->id ?>" style='display:none'>
-             <input type="submit" name="add" value="Přidat">
-           </form>
+           <div class="teams_table_wrapper">
+             <div class="teams_table">
+               <table>
+                 <th><h2>Jméno</h2></th>
+                 <th><h2>Příjmení</h2></th>
+                 <th><h2>Uživatelské jméno</h2></th>
+                 <tr>
+                   <td>
+                     <h3><?php echo $user->name; ?></h3>
+                   </td>
+                   <td>
+                     <h3><?php echo $user->surname; ?></h3>
+                   </td>
+                   <td>
+                     <h3><?php echo $user->username ?></h3>
+                   </td>
+                   <td>
+                     <form class="" method="post">
+                       <input type="text" name="id" value="<?php echo $user->id ?>" style='display:none'>
+                       <input type="submit" class="form_send" name="add" value="Přidat">
+                     </form>
+                   </td>
+                 </tr>
+               </table>
+             </div>
+           </div>
          <?php endforeach; ?>
       <?php endif; ?>
 
       <div class="teams_table_wrapper">
+        <h3 style="padding-bottom: 10px;">Uživatelé v týmu</h3>
         <div class="teams_table">
           <?php $usersInTeam = $db->run("SELECT * FROM users JOIN users_teams ON users.id = users_teams.id_users WHERE users_teams.id_teams = ?", [$_GET['id']])->fetchAll(PDO::FETCH_OBJ); ?>
           <table>

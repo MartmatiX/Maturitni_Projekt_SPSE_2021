@@ -38,12 +38,14 @@ if (isset($_POST['delete'])) {
      </div>
 
      <div class="organizer_wrapper">
-     <h1><?php echo $team->name; ?></h1>
-     <?php if ($_SESSION['id'] == $team->id_creator): ?>
-       <div class="organizer_header_links">
-         <a href="teams-members.php?id=<?php echo $team->id; ?>" style="padding-bottom:30px;">Členi</a>
+       <div class="" style="padding-bottom: 50px;">
+         <h1><?php echo $team->name; ?></h1>
+         <?php if ($_SESSION['id'] == $team->id_creator): ?>
+           <div class="organizer_header_links">
+             <a href="teams-members.php?id=<?php echo $team->id; ?>">Členi</a>
+           </div>
+         <?php endif; ?>
        </div>
-     <?php endif; ?>
 
      <?php
         $objectives = $db->run("SELECT * FROM teams_main_objectives WHERE teams_id = ? AND finished = 0 ORDER BY urgent desc, finish_date asc", [$_GET['id']])->fetchAll(PDO::FETCH_OBJ);

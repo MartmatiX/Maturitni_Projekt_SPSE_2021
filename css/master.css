@@ -555,6 +555,7 @@ footer{
 
 /* teams css */
 .detail_div{
+  justify-content: center;
   text-align: center;
   padding-top: 10%;
 }
@@ -565,8 +566,11 @@ footer{
 }
 
 /* teams members css */
+.teams_table_wrapper{
+  padding-top: 100px;
+}
+
 .teams_table{
-  padding-top: 40px;
   text-align: center;
   margin-bottom: 30px;
 }

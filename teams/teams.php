@@ -1,5 +1,14 @@
 <?php require_once '../config/bootstrap.php'; ?>
 
+<?php
+  if (isset($_POST['leave'])) {
+    if ($db->run("DELETE FROM users_teams WHERE id_teams = ?", [$_POST['team_id']])) {
+      header("Location: teams.php?left");
+      exit();
+    }
+  }
+ ?>
+
 <?php require_once '../header.php'; ?>
 <main>
   <div class="organizer_wrapper">
@@ -27,8 +36,6 @@
           <h1>Vámi založené týmy:</h1>
           <div class="organizer_header_links">
             <a href="create_team.php" class="link_spacing_right">Založit nový</a>
-            <p>|</p>
-            <a href="teams_invitations.php" class="link_spacing_left">Pozvánky (<?php echo $count->pocet; ?>)</a>
           </div>
        </div>
      </div>
@@ -54,7 +61,7 @@
              </div>
            </div>
            <div class="detail_div">
-             <a href="teams-main_objective_details.php?id=<?php echo $createdTeam->id ?>">Detaily</a>
+             <a href="teams-main_objective_details.php?id=<?php echo $createdTeam->id ?>"><img src="../css/pictures/icon_edit.png" alt="icon_edit" height="40px" width="40px"></a>
            </div>
          </div>
        <?php endforeach; ?>
@@ -65,17 +72,23 @@
       $teams = $db->run("SELECT * FROM teams JOIN users_teams ON teams.id = users_teams.id_teams WHERE users_teams.id_users = ?", [$_SESSION['id']])->fetchAll(PDO::FETCH_OBJ);
     ?>
 
-      <div class="organizer_header">
+      <div style="padding-top: 20px;" class="organizer_header">
         <?php if (empty($teams)): ?>
           <h1>Nejste členem žádného týmu</h1>
+          <div class="organizer_header_links">
+            <a href="teams_invitations.php" class="link_spacing_left">Pozvánky (<?php echo $count->pocet; ?>)</a>
+          </div>
         <?php else: ?>
           <h1>Ostatní týmy:</h1>
+          <div style="padding-bottom: 40px;" class="organizer_header_links">
+            <a href="teams_invitations.php" class="link_spacing_left">Pozvánky (<?php echo $count->pocet; ?>)</a>
+          </div>
       </div>
       <div class="flex_wrap">
         <?php foreach ($teams as $team): ?>
           <?php
             $creator = $db->run("SELECT username FROM users WHERE id = ?", [$team->id_creator])->fetch(PDO::FETCH_OBJ);
-
+            $pocet_ukolu = $db->run("SELECT count('id') AS pocet FROM teams_main_objectives WHERE teams_id = ?", [$team->id_teams])->fetch(PDO::FETCH_OBJ);
           ?>
           <div class="card_wrapper">
             <div class="card_header">
@@ -87,11 +100,19 @@
                 <h5>Zakladatel: <?php echo $creator->username; ?></h5>
               </div>
               <div class="card_date">
-
+                <h5>Úkoly: <?php echo $pocet_ukolu->pocet; ?></h5>
               </div>
             </div>
             <div class="detail_div">
-              <a href="teams-main_objective_details.php?id=<?php echo $team->id ?>">Zobrazit</a>
+              <div class="">
+                <a href="teams-main_objective_details.php?id=<?php echo $team->id ?>"><img src="../css/pictures/icon_details.png" alt="icon_details" height="40px" width="40px"></a>
+              </div>
+              <div class="">
+                <form class="" method="post">
+                  <input style="float: right;" type="submit" class="form_delete" name="leave" value="">
+                  <input type="text" style="display:none;" name="team_id" value="<?php echo $team->id; ?>">
+                </form>
+              </div>
             </div>
           </div>
         <?php endforeach; ?>
