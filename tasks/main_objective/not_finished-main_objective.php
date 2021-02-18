@@ -24,7 +24,7 @@
       <div class="div_backLink">
         <a href="../../objective_organizer.php"><button>Zpět</button></a>
       </div>
-      <h1>Žádné splněné úkoly v historii</h1>
+      <h1>Žádné nesplněné úkoly v historii</h1>
     <?php else: ?>
         <div class="div_backLink">
           <a href="../../objective_organizer.php"><button>Zpět</button></a>
