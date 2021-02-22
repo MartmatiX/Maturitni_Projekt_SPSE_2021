@@ -75,7 +75,7 @@ if (isset($_POST['delete'])) {
             <h4><?php echo $mainObjective->name ?></h4>
           </div>
           <div class="card_progressBar">
-            <progress value="<?php echo $percentage?>" max="100"></progress>
+            <progress class="percentage" value="<?php echo $percentage?>" max="100"></progress>
           </div>
           <div class="card_counter_date">
             <div class="card_counter">
@@ -125,12 +125,26 @@ if (isset($_POST['delete'])) {
       document.getElementsByClassName('card_wrapper')[i].style.border = "3px solid orange";
     }
   }
+
   let array_finished = document.getElementsByClassName('finished_class');
-  console.log(array_finished);
   for (var i = 0; i < array_finished.length; i++) {
     if (array_finished[i].value == 3) {
       document.getElementsByClassName('card_wrapper')[i].style.border = "3px solid purple";
       console.log(1);
+    }
+  }
+
+  let array_percentage = document.getElementsByClassName('percentage');
+  console.log(array_percentage[0].value);
+  let array_danger = document.getElementsByClassName('finish_date_class');
+  let date = new Date();
+  let today = date.getTime();
+  let daysLater = today + 259200000;
+  let danger_date = 0;
+  for (var i = 0; i < array_danger.length; i++) {
+    danger_date = Date.parse(array_danger[i].value);
+    if (danger_date < daysLater && array_percentage[i].value < 50) {
+      document.getElementsByClassName('card_wrapper')[i].style.boxShadow = "5px 10px darkred";
     }
   }
   </script>

@@ -5,22 +5,28 @@
     $username = htmlspecialchars($username = $_POST['username']);
     $existence = $db->run("SELECT username FROM users WHERE username = ?", [$username])->fetch();
     if (empty($existence)) {
-      $name = htmlspecialchars($name = $_POST['name']);
-      $surname = htmlspecialchars($surname = $_POST['surname']);
-      $password = htmlspecialchars($password = password_hash($_POST['password'], PASSWORD_DEFAULT));
-      $email = htmlspecialchars($email = $_POST['email']);
-      if ($db->run("INSERT INTO users(name, surname, username, password, email) VALUES (?,?,?,?,?)", [$name, $surname, $username, $password, $email])) {
-        header("Location: login-user.php");
+      $password = htmlspecialchars($_POST['password']);
+      $password_repeat = htmlspecialchars($_POST['password_repeat']);
+      if ($password != $password_repeat) {
+        header("Location: register-user.php?password_match=false");
         exit();
-      }else {
-        header("Location: register-user.php?dberror");
-        exit();
+      }else{
+        $name = htmlspecialchars($name = $_POST['name']);
+        $surname = htmlspecialchars($surname = $_POST['surname']);
+        $password = htmlspecialchars($password = password_hash($_POST['password'], PASSWORD_DEFAULT));
+        $email = htmlspecialchars($email = $_POST['email']);
+        if ($db->run("INSERT INTO users(name, surname, username, password, email) VALUES (?,?,?,?,?)", [$name, $surname, $username, $password, $email])) {
+          header("Location: login-user.php");
+          exit();
+        }else {
+          header("Location: register-user.php?dberror");
+          exit();
+        }
       }
     }else {
       header("Location: register-user.php?existence=true");
       exit();
     }
-
   }
 ?>
 
