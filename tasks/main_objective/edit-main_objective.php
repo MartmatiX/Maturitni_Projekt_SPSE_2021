@@ -36,11 +36,12 @@
             <input type="text" name="name" value="<?php echo $main_objective->name; ?>">
           </div>
           <div class="form_spacing">
-            <h3>Datum úkolu</h3>
+            <h3>Datum dokončení úkolu</h3>
             <input type="date" name="finish_date" value="<?php echo $main_objective->finish_date; ?>">
           </div>
           <div class="form_spacing_urgent">
-            <input type="checkbox" name="urgent" value="<?php if($main_objective->urgent == 1){echo 1;} ?>" id="urgent">
+            <input type="text" id="urgent_value" value="<?php echo $main_objective->urgent; ?>" style="display: none;">
+            <input type="checkbox" id="urgent" name="urgent">
             <h3>Urgentní</h3>
           </div>
           <div class="form_spacing">
@@ -55,7 +56,14 @@
   </div>
 
   <script type="text/javascript">
-    // dodělat check u checkboxu, pokud je urgent
+    let urgent_value = document.getElementById('urgent_value').value;
+    console.log(urgent_value);
+    let check = document.getElementById('urgent');
+    console.log(check);
+    if (urgent_value == 1) {
+      document.getElementById('urgent').checked = true;
+      console.log(1);
+    }
   </script>
   <?php require_once "../../footer.php"; ?>
 <?php endif; ?>

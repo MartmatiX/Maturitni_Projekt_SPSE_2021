@@ -26,9 +26,7 @@ if (isset($_POST['delete'])) {
 <?php else: ?>
   <main>
 
-    <?php
-      $mainObjectives = $db->run("SELECT * FROM main_objectives WHERE users_id = ? AND finished = 0 OR finished = 3 ORDER BY urgent desc, finish_date asc", [$_SESSION['id']])->fetchAll(PDO::FETCH_CLASS, "MainObjective");
-    ?>
+    <?php $mainObjectives = $db->run("SELECT * FROM main_objectives WHERE users_id = ? AND finished = 0 OR finished = 3 ORDER BY urgent desc, finish_date asc", [$_SESSION['id']])->fetchAll(PDO::FETCH_CLASS, "MainObjective"); ?>
 
     <div class="organizer_wrapper">
       <div class="main_wrapper">
@@ -86,8 +84,8 @@ if (isset($_POST['delete'])) {
               <input type="text" name="" style="display:none" class="finish_date_class" value="<?php echo $mainObjective->finish_date; ?>">
             </div>
           </div>
-          <input type="text" name="" style="display:none" class="finished_class" value="<?php echo $mainObjective->finished; ?>">
             <form method="post">
+              <input type="text" name="" style="display:none" class="finished_class" value="<?php echo $mainObjective->finished; ?>">
               <div class="card_form">
                 <div class="card_finish">
                   <input class="form_finished" type="submit" name="finish" value="">
