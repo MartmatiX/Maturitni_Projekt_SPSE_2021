@@ -39,7 +39,7 @@
         </div>
       </div>
       <div class="div_edit_picture">
-        <img src="../css/pictures/profile_picture.svg" alt="profile_picture" width="600px">
+        <img class="image_responsive" src="../css/pictures/profile_picture.svg" alt="profile_picture" width="600px">
       </div>
     </div>
   <?php endif; ?>

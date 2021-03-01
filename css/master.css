@@ -583,3 +583,36 @@ td, th{
   border: 2px solid rgb(24, 111, 178);
   padding: 10px;
 }
+
+@media only screen and (max-width: 1200px){
+  .image_responsive{
+    display: none;
+  }
+
+  .header_background{
+    flex-direction: column;
+  }
+
+  .header_header{
+    text-align: center;
+    margin: 0;
+  }
+
+  .header_links a{
+    display: block;
+    border: 1px solid white;
+    margin-top: 15px;
+    border-radius: 5px;
+    margin-right: 0px;
+  }
+
+  .header_links{
+    text-align: center;
+    width: 50%;
+    align-self: center;
+  }
+
+  .card_wrapper{
+    width: 30%;
+  }
+}

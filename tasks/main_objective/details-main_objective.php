@@ -10,21 +10,18 @@
 
     }
   }
-
   if (isset($_POST['delete_medium'])) {
     if ($db->run("DELETE FROM medium_objectives WHERE id = ?", [$_POST['medium_id']])) {
       header("Location: details-main_objective.php?id=".$main_objective_id);
       exit();
     }
   }
-
   if (isset($_POST['finish_additional'])) {
     if ($db->run("UPDATE additional_objectives SET finished = 1 WHERE id = ?", [$_POST['additional_id']])) {
       header("Location: details-main_objective.php?id=".$main_objective_id);
       exit();
     }
   }
-
   if (isset($_POST['delete_additional'])) {
     if ($db->run("DELETE FROM additional_objectives WHERE id = ?", [$_POST['additional_id']])) {
       header("Location: details-main_objective.php?id=".$main_objective_id);

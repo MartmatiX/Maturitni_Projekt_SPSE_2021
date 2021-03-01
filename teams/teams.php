@@ -7,6 +7,12 @@
       exit();
     }
   }
+  if (isset($_POST['disbandon'])) {
+    if ($db->run("DELETE FROM teams WHERE id = ?", [$_POST['created_team_id']])) {
+      header("Location: teams.php?disbanded");
+      exit();
+    }
+  }
  ?>
 
 <?php require_once '../header.php'; ?>
@@ -62,6 +68,10 @@
            </div>
            <div class="detail_div">
              <a href="teams-main_objective_details.php?id=<?php echo $createdTeam->id ?>"><img src="../css/pictures/icon_edit.png" alt="icon_edit" height="40px" width="40px"></a>
+             <form class="" method="post">
+               <input style="float: right;" type="submit" class="form_delete" name="disbandon" value="">
+               <input type="text" style="display:none;" name="created_team_id" value="<?php echo $createdTeam->id; ?>">
+             </form>
            </div>
          </div>
        <?php endforeach; ?>

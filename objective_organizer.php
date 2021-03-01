@@ -128,7 +128,6 @@ if (isset($_POST['delete'])) {
   for (var i = 0; i < array_finished.length; i++) {
     if (array_finished[i].value == 3) {
       document.getElementsByClassName('card_wrapper')[i].style.border = "3px solid purple";
-      console.log(1);
     }
   }
 

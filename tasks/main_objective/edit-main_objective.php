@@ -37,7 +37,7 @@
           </div>
           <div class="form_spacing">
             <h3>Datum dokončení úkolu</h3>
-            <input type="date" name="finish_date" value="<?php echo $main_objective->finish_date; ?>">
+            <input type="date" id="finish_date" name="finish_date" value="<?php echo $main_objective->finish_date; ?>">
           </div>
           <div class="form_spacing_urgent">
             <input type="text" id="urgent_value" value="<?php echo $main_objective->urgent; ?>" style="display: none;">
@@ -64,6 +64,19 @@
       document.getElementById('urgent').checked = true;
       console.log(1);
     }
+
+    let today = new Date();
+    let dd = today.getDate();
+    let mm = today.getMonth()+1; //January is 0!
+    let yyyy = today.getFullYear();
+    if(dd < 10){
+      dd = '0' + dd;
+    }
+    if(mm < 10){
+      mm = '0' + mm;
+    }
+    today = yyyy+'-'+mm+'-'+dd;
+    document.getElementById("finish_date").setAttribute("min", today);
   </script>
   <?php require_once "../../footer.php"; ?>
 <?php endif; ?>
