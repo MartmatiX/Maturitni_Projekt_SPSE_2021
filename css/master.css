@@ -518,7 +518,7 @@ footer{
 
 .logOut_form{
   padding-bottom: 40px;
-  padding-left: 50%;
+  padding-left: 55%;
 }
 
 .form_data{
@@ -615,4 +615,22 @@ td, th{
   .card_wrapper{
     width: 30%;
   }
+
+  .div_edit_picture{
+    display: none;
+  }
+
+  .profile_wrapper{
+    justify-content: center;
+  }
+
+  .profile_data{
+    padding-left: 0;
+  }
+
+  .logOut_form{
+    padding: 0;
+    padding-left: 35%;
+  }
+
 }
