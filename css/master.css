@@ -633,4 +633,8 @@ td, th{
     padding-left: 35%;
   }
 
+  .details_card_wrapper{
+    width: 100%;
+  }
+
 }
