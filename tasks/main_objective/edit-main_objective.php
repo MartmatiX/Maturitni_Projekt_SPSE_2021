@@ -57,12 +57,9 @@
 
   <script type="text/javascript">
     let urgent_value = document.getElementById('urgent_value').value;
-    console.log(urgent_value);
     let check = document.getElementById('urgent');
-    console.log(check);
     if (urgent_value == 1) {
       document.getElementById('urgent').checked = true;
-      console.log(1);
     }
 
     let today = new Date();

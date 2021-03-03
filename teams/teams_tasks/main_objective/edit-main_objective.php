@@ -38,10 +38,11 @@
           </div>
           <div class="form_spacing">
             <h3>Datum úkolu</h3>
-            <input type="date" name="finish_date" value="<?php echo $main_objective->finish_date; ?>">
+            <input type="date" id="finish_date" name="finish_date" value="<?php echo $main_objective->finish_date; ?>">
           </div>
           <div class="form_spacing_urgent">
-            <input type="checkbox" name="urgent" value="<?php if($main_objective->urgent == 1){echo 1;} ?>" id="urgent">
+            <input type="text" id="urgent_value" value="<?php echo $main_objective->urgent; ?>" style="display: none;">
+            <input type="checkbox" id="urgent" name="urgent">
             <h3>Urgentní</h3>
           </div>
           <div class="form_spacing">
@@ -56,7 +57,24 @@
   </div>
 
   <script type="text/javascript">
-    // dodělat check u checkboxu, pokud je urgent
+    let urgent_value = document.getElementById('urgent_value').value;
+    let check = document.getElementById('urgent');
+    if (urgent_value == 1) {
+      document.getElementById('urgent').checked = true;
+    }
+
+    let today = new Date();
+    let dd = today.getDate();
+    let mm = today.getMonth()+1; //January is 0!
+    let yyyy = today.getFullYear();
+    if(dd < 10){
+      dd = '0' + dd;
+    }
+    if(mm < 10){
+      mm = '0' + mm;
+    }
+    today = yyyy+'-'+mm+'-'+dd;
+    document.getElementById("finish_date").setAttribute("min", today);
   </script>
   <?php require_once "../../../footer.php"; ?>
 <?php endif; ?>

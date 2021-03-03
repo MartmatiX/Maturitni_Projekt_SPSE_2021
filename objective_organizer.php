@@ -132,7 +132,6 @@ if (isset($_POST['delete'])) {
   }
 
   let array_percentage = document.getElementsByClassName('percentage');
-  console.log(array_percentage[0].value);
   let array_danger = document.getElementsByClassName('finish_date_class');
   let date = new Date();
   let today = date.getTime();

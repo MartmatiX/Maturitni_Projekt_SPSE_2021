@@ -134,7 +134,11 @@
                   <?php endif; ?>
                 </div>
                 <div class="additional_finish_date">
-                  <h5><?php echo $additional_objective_data->finish_date; ?></h5>
+                  <?php
+                  $czechArray = explode("-", $additional_objective_data->finish_date);
+                  $czechDate = $czechArray[2] . "." . $czechArray[1] . "." . $czechArray[0];
+                  ?>
+                  <h5><?php echo $czechDate; ?></h5>
                 </div>
                 <div class="additional_comment_wrapper">
                   <div class="additional_comment_div">

@@ -4,9 +4,9 @@
   $main_objective_id = $db->run("SELECT main_objectives_id FROM medium_objectives WHERE id = ?", [$_GET['id']])->fetch(PDO::FETCH_OBJ);
   $medium_objective_finish_date = $db->run("SELECT finish_date FROM medium_objectives WHERE id = ?", [$_GET['id']])->fetch(PDO::FETCH_OBJ);
   if (isset($_POST['submit'])) {
-    $name = $_POST['name'];
-    $date = $_POST['finish_date'];
-    $comment = $_POST['comment'];
+    $name = htmlspecialchars($_POST['name']);
+    $date = htmlspecialchars($_POST['finish_date']);
+    $comment = htmlspecialchars($_POST['comment']);
     if ($db->run("INSERT INTO additional_objectives(name, finish_date, comment, medium_objectives_id) VALUES(?,?,?,?)", [$name, $date, $comment, $_GET['id']])) {
       header("Location: ../main_objective/details-main_objective.php?id=$medium_objective->id");
       exit();

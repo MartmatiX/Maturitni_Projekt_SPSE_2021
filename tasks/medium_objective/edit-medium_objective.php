@@ -4,8 +4,8 @@ $medium_objective = $db->run("SELECT main_objectives.users_id, main_objectives.i
 $main_objective_id = $db->run("SELECT main_objectives_id FROM medium_objectives WHERE id = ?", [$_GET['id']])->fetch(PDO::FETCH_OBJ);
 $main_objective_finish_date = $db->run("SELECT finish_date FROM main_objectives WHERE id = ?", [$main_objective_id->main_objectives_id])->fetch(PDO::FETCH_OBJ);
   if (isset($_POST['submit'])) {
-    $name = $_POST['name'];
-    $finish_date = $_POST['finish_date'];
+    $name = htmlspecialchars($_POST['name']);
+    $finish_date = htmlspecialchars($_POST['finish_date']);
     if ($db->run("UPDATE medium_objectives SET name = ?, finish_date = ? WHERE id = ?", [$name, $finish_date, $_GET['id']])) {
       header("Location: ../main_objective/details-main_objective.php?id=$medium_objective->id");
       exit();

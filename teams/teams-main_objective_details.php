@@ -48,7 +48,7 @@ if (isset($_POST['delete'])) {
        </div>
 
      <?php
-        $objectives = $db->run("SELECT * FROM teams_main_objectives WHERE teams_id = ? AND finished = 0 ORDER BY urgent desc, finish_date asc", [$_GET['id']])->fetchAll(PDO::FETCH_OBJ);
+        $objectives = $db->run("SELECT * FROM teams_main_objectives WHERE teams_id = ? AND finished = 0 OR finished = 3 ORDER BY urgent desc, finish_date asc", [$_GET['id']])->fetchAll(PDO::FETCH_OBJ);
       ?>
 
         <div class="main_wrapper">
@@ -61,7 +61,7 @@ if (isset($_POST['delete'])) {
             <div class="organizer_header_links">
               <a href="teams_tasks/main_objective/finished-main_objective.php?id=<?php echo $_GET['id']; ?>" class="link_spacing_right">Splněné úkoly</a>
               <p>|</p>
-              <a href="#" class="link_spacing_left">Nesplněné úkoly</a>
+              <a href="teams_tasks/main_objective/not_finished-main_objective.php?id=<?php echo $_GET['id']; ?>" class="link_spacing_left">Nesplněné úkoly</a>
             </div>
           </div>
           <?php if ($_SESSION['id'] == $team->id_creator): ?>
@@ -102,7 +102,7 @@ if (isset($_POST['delete'])) {
               <h4><?php echo $mainObjective->name ?></h4>
             </div>
             <div class="card_progressBar">
-              <progress value="<?php echo $percentage?>" max="100"></progress>
+              <progress class="percentage" value="<?php echo $percentage?>" max="100"></progress>
             </div>
             <div class="card_counter_date">
               <div class="card_counter">
@@ -110,9 +110,11 @@ if (isset($_POST['delete'])) {
               </div>
               <div class="card_date">
                 <h5><?php echo $czechDate; ?></h5>
+                <input type="text" name="" style="display:none" class="finish_date_class" value="<?php echo $mainObjective->finish_date; ?>">
               </div>
             </div>
               <form method="post" id="card_form">
+                <input type="text" name="" style="display:none" class="finished_class" value="<?php echo $mainObjective->finished; ?>">
                 <div class="card_form">
                   <div class="card_finish">
                     <input class="form_finished" type="submit" name="finish" value="">
@@ -133,6 +135,13 @@ if (isset($_POST['delete'])) {
                 </div>
               </form>
           </div>
+          <?php
+            $currentDate = date("Y-m-d");
+            $finish_date = $mainObjective->finish_date;
+            if ($currentDate > $finish_date) {
+              $db->run("UPDATE teams_main_objectives SET finished = 2 WHERE id = ?", [$mainObjective->id]);
+            }
+           ?>
         <?php endforeach; ?>
       </div>
     </div>
@@ -143,6 +152,25 @@ if (isset($_POST['delete'])) {
       for (let i = 0; i < array.length; i++) {
         if (array[i].value == 1) {
           document.getElementsByClassName('card_wrapper')[i].style.border = " 3px solid orange";
+        }
+      }
+      let array_finished = document.getElementsByClassName('finished_class');
+      for (var i = 0; i < array_finished.length; i++) {
+        if (array_finished[i].value == 3) {
+          document.getElementsByClassName('card_wrapper')[i].style.border = "3px solid purple";
+        }
+      }
+
+      let array_percentage = document.getElementsByClassName('percentage');
+      let array_danger = document.getElementsByClassName('finish_date_class');
+      let date = new Date();
+      let today = date.getTime();
+      let daysLater = today + 259200000;
+      let danger_date = 0;
+      for (var i = 0; i < array_danger.length; i++) {
+        danger_date = Date.parse(array_danger[i].value);
+        if (danger_date < daysLater && array_percentage[i].value < 50) {
+          document.getElementsByClassName('card_wrapper')[i].style.boxShadow = "5px 10px darkred";
         }
       }
     </script>

@@ -1,33 +1,33 @@
-<?php require_once '../../config/bootstrap.php'; ?>
+<?php require_once '../../../config/bootstrap.php'; ?>
 <?php
   if (isset($_POST['delete'])) {
-    if ($db->run("DELETE FROM main_objectives WHERE id = ?", [$_POST['not_finished_id']])) {
-      header("Location: not_finished-main_objective.php");
+    if ($db->run("DELETE FROM teams_main_objectives WHERE id = ?", [htmlspecialchars($_POST['not_finished_id'])])) {
+      header("Location: not_finished-main_objective.php?id=".$_GET['id']);
       exit();
     }
   }
   if (isset($_POST['set_new_date'])) {
-    if ($db->run("UPDATE main_objectives SET finish_date = ? WHERE id = ?", [htmlspecialchars($_POST['new_date']), $_POST['not_finished_id']])) {
-      $db->run("UPDATE main_objectives SET finished = 3 WHERE id = ?", [$_POST['not_finished_id']]);
-      header("Location: ../../objective_organizer.php?success");
+    if ($db->run("UPDATE teams_main_objectives SET finish_date = ? WHERE id = ?", [$_POST['new_date'], $_POST['not_finished_id']])) {
+      $db->run("UPDATE teams_main_objectives SET finished = 3 WHERE id = ?", [$_POST['not_finished_id']]);
+      header("Location: ../../../objective_organizer.php?success");
       exit();
     }
   }
  ?>
-<?php require_once '../../header.php'; ?>
+<?php require_once '../../../header.php'; ?>
 <main>
   <?php if (!isset($_SESSION['id'])): ?>
-    <?php require_once '../../error_components/not_logged-in.php'; ?>
+    <h1>Nejste přihlášeni!</h1>
   <?php else: ?>
-    <?php $not_finished = $db->run("SELECT * FROM main_objectives WHERE users_id = ? AND finished = 2", [$_SESSION['id']])->fetchAll(PDO::FETCH_CLASS, 'MainObjective');?>
+    <?php $not_finished = $db->run("SELECT * FROM teams_main_objectives WHERE teams_id = ? AND finished = 2", [$_GET['id']])->fetchAll(PDO::FETCH_CLASS, 'MainObjective');?>
     <?php if (empty($not_finished)): ?>
       <div class="div_backLink">
-        <a href="../../objective_organizer.php"><button>Zpět</button></a>
+        <a href="../../teams-main_objective_details.php?id=<?php echo $_GET['id']; ?>"><button>Zpět</button></a>
       </div>
       <h1>Žádné nesplněné úkoly v historii</h1>
     <?php else: ?>
         <div class="div_backLink">
-          <a href="../../objective_organizer.php"><button>Zpět</button></a>
+          <a href="../../teams-main_objective_details.php?id=<?php echo $_GET['id']; ?>"><button>Zpět</button></a>
         </div>
       <div class="finished_wrapper">
         <div class="flex_wrap">
@@ -75,4 +75,4 @@
   }
   </script>
 </main>
-<?php require_once '../../footer.php'; ?>
+<?php require_once '../../../footer.php'; ?>

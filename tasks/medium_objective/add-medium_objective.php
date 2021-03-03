@@ -1,8 +1,8 @@
 <?php require_once '../../config/bootstrap.php'; ?>
 <?php
    if (isset($_POST['submit'])) {
-     $name = $_POST['name'];
-     $finish_date = $_POST['finish_date'];
+     $name = htmlspecialchars($_POST['name']);
+     $finish_date = htmlspecialchars($_POST['finish_date']);
      if ($db->run("INSERT INTO medium_objectives(name, finish_date, main_objectives_id) VALUES (?,?,?)", [$name, $finish_date, $_GET['id']])) {
        header("Location: ../main_objective/details-main_objective.php?id=".$_GET['id']);
        exit();
