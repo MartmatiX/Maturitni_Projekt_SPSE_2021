@@ -16,11 +16,11 @@
         header("Location: ../objective_organizer.php");
         exit();
       }else {
-        header("Location: login-user.php?wrongPassword");
+        header("Location: login-user.php?wrongPassword=true");
         exit();
       }
     }else{
-      header("Location: login-user.php?wrongUsername");
+      header("Location: login-user.php?wrongUsername=true");
       exit();
     }
   }
@@ -32,6 +32,21 @@
       <div class="form_wrapper">
         <div class="login_login">
           <div class="form_header">
+            <?php if (isset($_GET['register']) && $_GET['register'] == 'true'): ?>
+              <div class="alert alert-success" role="alert">
+                Registrace proběhla úspěšně
+              </div>
+            <?php endif; ?>
+            <?php if (isset($_GET['wrongPassword']) && $_GET['wrongPassword'] == 'true'): ?>
+              <div class="alert alert-danger" role="alert">
+                Špatné heslo
+              </div>
+            <?php endif; ?>
+            <?php if (isset($_GET['wrongUsername']) && $_GET['wrongUsername'] == 'true'): ?>
+              <div class="alert alert-danger" role="alert">
+                Špatné uživatelské jméno
+              </div>
+            <?php endif; ?>
             <h1>Přihlášení</h1>
           </div>
           <div class="div_form">

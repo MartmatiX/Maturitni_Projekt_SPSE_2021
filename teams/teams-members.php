@@ -5,7 +5,7 @@
 $team = $db->run("SELECT * FROM teams WHERE id = ?", [$_GET['id']])->fetch(PDO::FETCH_OBJ);
    if (isset($_POST['add'])) {
      if ($db->run("INSERT INTO teams_requests(id_user, id_team) VALUES (?,?)", [$_POST['id'], $_GET['id']])) {
-       header("Location: teams-main_objective_details.php?id=".$_GET['id']);
+       header("Location: teams-main_objective_details.php?id=".$_GET['id']."&add=true");
        exit();
      }else{
        header("Location: teams-main_objective_details.php?id=".$_GET['id']);
@@ -15,7 +15,7 @@ $team = $db->run("SELECT * FROM teams WHERE id = ?", [$_GET['id']])->fetch(PDO::
 
    if (isset($_POST['delete'])) {
      if ($db->run("DELETE FROM users_teams WHERE id_users = ? AND id_teams = ?", [$_POST['user_id'], $_GET['id']])) {
-       header("Location: teams-members.php?id=".$_GET['id']);
+       header("Location: teams-members.php?id=".$_GET['id']."&delete=true");
      }
    }
  ?>
@@ -73,6 +73,11 @@ $team = $db->run("SELECT * FROM teams WHERE id = ?", [$_GET['id']])->fetch(PDO::
       <?php endif; ?>
 
       <div class="teams_table_wrapper">
+        <?php if (isset($_GET['delete']) && $_GET['delete'] == 'true'): ?>
+          <div class="alert alert-success" style="width: 400px" role="alert">
+            Uživatel odstraněn
+          </div>
+        <?php endif; ?>
         <h3 style="padding-bottom: 10px;">Uživatelé v týmu</h3>
         <div class="teams_table">
           <?php $usersInTeam = $db->run("SELECT * FROM users JOIN users_teams ON users.id = users_teams.id_users WHERE users_teams.id_teams = ?", [$_GET['id']])->fetchAll(PDO::FETCH_OBJ); ?>

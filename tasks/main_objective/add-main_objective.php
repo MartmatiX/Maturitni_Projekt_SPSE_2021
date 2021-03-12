@@ -9,11 +9,10 @@
       $urgent = 0;
     }
     if ($db->run("INSERT INTO main_objectives(name, finish_date, urgent, users_id) VALUES(?,?,?,?)", [$name, $finish_date, $urgent, $_SESSION['id']])) {
-      header("Location: ../../objective_organizer.php");
+      header("Location: ../../objective_organizer.php?add=true");
       exit();
-    }
-    else {
-      header("Location: add-main_objective.php");
+    }else {
+      header("Location: add-main_objective.php?add=failure");
       exit();
     }
   }
@@ -27,6 +26,11 @@
     <div class="form_wrapper">
       <div class="add_form">
         <div class="form_header">
+          <?php if (isset($_GET['add']) && $_GET['add'] == 'false'): ?>
+            <div class="alert alert-danger">
+              Úkol se nepodařilo přidat
+            </div>
+          <?php endif; ?>
           <h1>Přidání úkolu</h1>
         </div>
         <div class="div_form">

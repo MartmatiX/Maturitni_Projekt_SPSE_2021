@@ -39,6 +39,11 @@ if (isset($_POST['delete'])) {
 
      <div class="organizer_wrapper">
        <div class="" style="padding-bottom: 50px;">
+         <?php if (isset($_GET['add']) && $_GET['add'] == 'true'): ?>
+           <div class="alert alert-success" style="width: 400px" role="alert">
+             Pozvánka do týmu byla odeslána
+           </div>
+         <?php endif; ?>
          <h1><?php echo $team->name; ?></h1>
          <?php if ($_SESSION['id'] == $team->id_creator): ?>
            <div class="organizer_header_links">

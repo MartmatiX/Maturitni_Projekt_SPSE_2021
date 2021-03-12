@@ -25,7 +25,6 @@ if (isset($_POST['delete'])) {
   <?php require_once 'error_components/not_logged-in.php'; ?>
 <?php else: ?>
   <main>
-
     <?php $mainObjectives = $db->run("SELECT * FROM main_objectives WHERE users_id = ? AND finished = 0 OR finished = 3 ORDER BY urgent desc, finish_date asc", [$_SESSION['id']])->fetchAll(PDO::FETCH_CLASS, "MainObjective"); ?>
 
     <div class="organizer_wrapper">
@@ -34,6 +33,11 @@ if (isset($_POST['delete'])) {
           <?php if (empty($mainObjectives)): ?>
             <h1>Žádné běžící úkoly</h1>
           <?php else: ?>
+            <?php if (isset($_GET['add']) && $_GET['add'] == 'true'): ?>
+              <div class="alert alert-success">
+                Úkol úspěšně přidán
+              </div>
+            <?php endif; ?>
             <h1>Trvající úkoly</h1>
           <?php endif; ?>
           <div class="organizer_header_links">

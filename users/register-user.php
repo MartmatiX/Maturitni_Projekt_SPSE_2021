@@ -16,15 +16,15 @@
         $password = htmlspecialchars($password = password_hash($_POST['password'], PASSWORD_DEFAULT));
         $email = htmlspecialchars($email = $_POST['email']);
         if ($db->run("INSERT INTO users(name, surname, username, password, email) VALUES (?,?,?,?,?)", [$name, $surname, $username, $password, $email])) {
-          header("Location: login-user.php");
+          header("Location: login-user.php?register=true");
           exit();
         }else {
-          header("Location: register-user.php?dberror");
+          header("Location: register-user.php?dberror=true");
           exit();
         }
       }
     }else {
-      header("Location: register-user.php?existence=true");
+      header("Location: register-user.php?username=taken");
       exit();
     }
   }
@@ -37,6 +37,21 @@
       <div class="form_wrapper">
         <div class="register_register">
           <div class="form_header">
+            <?php if (isset($_GET['username']) && $_GET['username'] == 'taken'): ?>
+              <div class="alert alert-danger" role="alert">
+                Uživatelské jméno již existuje
+              </div>
+            <?php endif; ?>
+            <?php if (isset($_GET['password_match']) && $_GET['password_match'] == 'false'): ?>
+              <div class="alert alert-danger" role="alert">
+                Hesla se neshodují
+              </div>
+            <?php endif; ?>
+            <?php if (isset($_GET['dberror']) && $_GET['dberror'] == 'true'): ?>
+              <div class="alert alert-danger" role="alert">
+                Chyba na straně serveru
+              </div>
+            <?php endif; ?>
             <h1>Registrace</h1>
           </div>
           <div class="div_form">
